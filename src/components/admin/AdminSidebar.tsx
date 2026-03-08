@@ -22,7 +22,7 @@ export default function AdminSidebar({ open = false, onClose }: AdminSidebarProp
   const pathname = usePathname()
 
   function isActive(href: string, exact?: boolean) {
-    return exact ? pathname === href : pathname === href || pathname.startsWith(href + '/')
+    return exact ? pathname === href : pathname === href || (pathname?.startsWith(href + '/') ?? false)
   }
 
   const content = (

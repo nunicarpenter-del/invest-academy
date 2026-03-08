@@ -81,7 +81,7 @@ export default function Sidebar({ open, onClose, userName, userRole }: SidebarPr
             const label  = t.nav[key]
             const isActive =
               pathname === href ||
-              (href !== '/dashboard' && pathname.startsWith(`${href}/`))
+              (href !== '/dashboard' && (pathname?.startsWith(`${href}/`) ?? false))
             return (
               <Link
                 key={href}

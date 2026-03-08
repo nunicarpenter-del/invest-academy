@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation'
  */
 export default function ActivityLogger() {
   const pathname = usePathname()
-  const lastPath = useRef<string>('')
+  const lastPath = useRef<string | null>(null)
 
   useEffect(() => {
     if (pathname === lastPath.current) return
