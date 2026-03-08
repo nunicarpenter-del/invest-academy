@@ -1,18 +1,20 @@
-import { createClient } from '@supabase/supabase-js'
-import { NextRequest, NextResponse } from 'next/server'
+export const dynamic = 'force-dynamic'
 
-export async function POST(request: NextRequest) {
+import { createClient } from '@supabase/supabase-js'
+
+export async function POST(request: Request) {
   console.log('[/api/auth/signup] POST received')
   try {
     const { email, password, phone } = await request.json()
     console.log('[/api/auth/signup] body parsed, email:', email, 'phone:', phone)
 
     if (!email || !password || !phone) {
-      return NextResponse.json({ error: 'שדות חסרים' }, { status: 400 })
+      return new Response(
+        JSON.stringify({ error: 'שדות חסרים' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
-    // Server-side client — anon key is fine for signUp, but the request
-    // originates from our server so there is no browser CORS restriction.
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -26,11 +28,22 @@ export async function POST(request: NextRequest) {
     })
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 })
+      console.log('[/api/auth/signup] Supabase error:', error.message)
+      return new Response(
+        JSON.stringify({ error: error.message }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
-    return NextResponse.json({ success: true })
-  } catch {
-    return NextResponse.json({ error: 'שגיאת שרת פנימית' }, { status: 500 })
+    return new Response(
+      JSON.stringify({ success: true }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    )
+  } catch (err) {
+    console.error('[/api/auth/signup] caught:', err)
+    return new Response(
+      JSON.stringify({ error: 'שגיאת שרת פנימית' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
   }
 }
