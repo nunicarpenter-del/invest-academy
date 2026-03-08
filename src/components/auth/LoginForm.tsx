@@ -27,15 +27,11 @@ export default function LoginForm() {
     const supabase = createClient()
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/api/auth/callback`,
-      },
     })
     if (oauthError) {
       setError(oauthError.message)
       setLoading(false)
     }
-    // On success Supabase redirects the browser — no further action needed
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
