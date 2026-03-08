@@ -2,8 +2,10 @@ import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
+  console.log('[/api/auth/signup] POST received')
   try {
     const { email, password, phone } = await request.json()
+    console.log('[/api/auth/signup] body parsed, email:', email, 'phone:', phone)
 
     if (!email || !password || !phone) {
       return NextResponse.json({ error: 'שדות חסרים' }, { status: 400 })

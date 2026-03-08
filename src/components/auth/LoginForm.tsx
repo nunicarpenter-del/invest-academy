@@ -130,12 +130,26 @@ export default function LoginForm() {
     setLoading(true); setError(null)
 
     try {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, phone: phone.trim() }),
-      })
-      const data = await res.json()
+      let res: Response
+      try {
+        res = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, phone: phone.trim() }),
+        })
+      } catch (networkErr) {
+        const msg = networkErr instanceof Error ? networkErr.message : String(networkErr)
+        setError(`שגיאת רשת: ${msg}`)
+        return
+      }
+
+      let data: { error?: string; success?: boolean } = {}
+      try {
+        data = await res.json()
+      } catch {
+        setError(`שגיאת שרת (${res.status}) — התשובה לא תקינה. בדוק את לוגי Vercel.`)
+        return
+      }
 
       if (!res.ok) {
         const msg: string = data.error ?? 'שגיאה בהרשמה'
@@ -148,8 +162,6 @@ export default function LoginForm() {
       }
 
       setSuccess('נשלח אליך אימייל לאישור החשבון. בדוק את תיבת הדואר שלך.')
-    } catch {
-      setError('שגיאת חיבור — בדוק את החיבור לאינטרנט ונסה שוב.')
     } finally {
       setLoading(false)
     }
