@@ -75,7 +75,7 @@ export default function LoginForm() {
   const router = useRouter()
 
   function reset() {
-    setError(null); setSuccess(null)
+    setLoading(false); setError(null); setSuccess(null)
     setEmail(''); setPassword(''); setConfirm(''); setPhone('')
   }
 
@@ -136,7 +136,6 @@ export default function LoginForm() {
         body: JSON.stringify({ email, password, phone: phone.trim() }),
       })
       const data = await res.json()
-      setLoading(false)
 
       if (!res.ok) {
         const msg: string = data.error ?? 'שגיאה בהרשמה'
@@ -150,8 +149,9 @@ export default function LoginForm() {
 
       setSuccess('נשלח אליך אימייל לאישור החשבון. בדוק את תיבת הדואר שלך.')
     } catch {
-      setLoading(false)
       setError('שגיאת חיבור — בדוק את החיבור לאינטרנט ונסה שוב.')
+    } finally {
+      setLoading(false)
     }
   }
 
