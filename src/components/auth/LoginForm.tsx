@@ -104,7 +104,10 @@ export default function LoginForm() {
   const handleGoogle = async () => {
     setLoading(true); setError(null)
     const supabase = createClient()
-    const { error: err } = await supabase.auth.signInWithOAuth({ provider: 'google' })
+    const { error: err } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/api/auth/callback` },
+    })
     if (err) { setError(err.message); setLoading(false) }
   }
 
@@ -124,18 +127,6 @@ export default function LoginForm() {
       setError('מספר הטלפון אינו תקין. השתמש בספרות בלבד, עם + אופציונלי בהתחלה (לדוג׳ +972501234567).'); return
     }
 
-    // ── Debug: verify env vars are present ──────────────────────────────────
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    console.log('Supabase URL:', supabaseUrl)
-    console.log('Supabase Key present:', !!supabaseKey)
-
-    if (!supabaseUrl || !supabaseKey) {
-      const msg = `שגיאת הגדרות: משתני סביבה חסרים. URL: ${supabaseUrl ?? 'חסר'} | KEY: ${supabaseKey ? 'קיים' : 'חסר'}`
-      setError(msg)
-      return
-    }
-
     setLoading(true); setError(null)
 
     try {
@@ -147,16 +138,22 @@ export default function LoginForm() {
       })
       setLoading(false)
       if (err) {
-        console.error('signUp error:', err)
-        setError(`שגיאה: ${err.message} (${err.status ?? 'no status'})`)
+        if (err.message.includes('already registered') || err.message.includes('User already registered')) {
+          setError('כתובת אימייל זו כבר רשומה במערכת. נסה להתחבר או לאפס סיסמה.')
+        } else {
+          setError(err.message)
+        }
         return
       }
       setSuccess('נשלח אליך אימייל לאישור החשבון. בדוק את תיבת הדואר שלך.')
     } catch (caught: unknown) {
       setLoading(false)
       const msg = caught instanceof Error ? caught.message : String(caught)
-      console.error('signUp caught:', msg)
-      setError(`שגיאת רשת: ${msg} — בדוק שכתובת Supabase נגישה ושמפתח ה-Anon תקין.`)
+      if (msg.includes('fetch') || msg.includes('network') || msg.includes('Failed')) {
+        setError('שגיאת חיבור — בדוק את החיבור לאינטרנט ונסה שוב.')
+      } else {
+        setError(msg)
+      }
     }
   }
 
