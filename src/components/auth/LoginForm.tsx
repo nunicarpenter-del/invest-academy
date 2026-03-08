@@ -66,6 +66,7 @@ export default function LoginForm() {
   const [email, setEmail]     = useState('')
   const [password, setPassword]        = useState('')
   const [confirmPassword, setConfirm]  = useState('')
+  const [phone, setPhone]              = useState('')
 
   const [loading, setLoading] = useState(false)
   const [error,   setError]   = useState<string | null>(null)
@@ -75,7 +76,7 @@ export default function LoginForm() {
 
   function reset() {
     setError(null); setSuccess(null)
-    setEmail(''); setPassword(''); setConfirm('')
+    setEmail(''); setPassword(''); setConfirm(''); setPhone('')
   }
 
   function switchTo(v: View) { reset(); setView(v) }
@@ -116,9 +117,19 @@ export default function LoginForm() {
     if (password.length < 6) {
       setError('הסיסמה חייבת להכיל לפחות 6 תווים.'); return
     }
+    if (!phone.trim()) {
+      setError('נא להזין מספר טלפון.'); return
+    }
+    if (!/^\+?[0-9]{7,15}$/.test(phone.trim())) {
+      setError('מספר הטלפון אינו תקין. השתמש בספרות בלבד, עם + אופציונלי בהתחלה (לדוג׳ +972501234567).'); return
+    }
     setLoading(true); setError(null)
     const supabase = createClient()
-    const { error: err } = await supabase.auth.signUp({ email, password })
+    const { error: err } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { phone: phone.trim() } },
+    })
     setLoading(false)
     if (err) { setError(err.message); return }
     setSuccess('נשלח אליך אימייל לאישור החשבון. בדוק את תיבת הדואר שלך.')
@@ -230,6 +241,21 @@ export default function LoginForm() {
                 onChange={e => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 dir="ltr"
+                className={INPUT}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label htmlFor="signup-phone" className={LABEL}>מספר טלפון</label>
+              <input
+                id="signup-phone"
+                type="tel"
+                required
+                value={phone}
+                onChange={e => setPhone(e.target.value.replace(/[^\d+]/g, ''))}
+                placeholder="+972501234567"
+                dir="ltr"
+                inputMode="tel"
                 className={INPUT}
               />
             </div>
