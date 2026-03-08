@@ -130,30 +130,28 @@ export default function LoginForm() {
     setLoading(true); setError(null)
 
     try {
-      const supabase = createClient()
-      const { error: err } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { phone: phone.trim() } },
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, phone: phone.trim() }),
       })
+      const data = await res.json()
       setLoading(false)
-      if (err) {
-        if (err.message.includes('already registered') || err.message.includes('User already registered')) {
+
+      if (!res.ok) {
+        const msg: string = data.error ?? 'שגיאה בהרשמה'
+        if (msg.includes('already registered') || msg.includes('User already registered')) {
           setError('כתובת אימייל זו כבר רשומה במערכת. נסה להתחבר או לאפס סיסמה.')
         } else {
-          setError(err.message)
+          setError(msg)
         }
         return
       }
+
       setSuccess('נשלח אליך אימייל לאישור החשבון. בדוק את תיבת הדואר שלך.')
-    } catch (caught: unknown) {
+    } catch {
       setLoading(false)
-      const msg = caught instanceof Error ? caught.message : String(caught)
-      if (msg.includes('fetch') || msg.includes('network') || msg.includes('Failed')) {
-        setError('שגיאת חיבור — בדוק את החיבור לאינטרנט ונסה שוב.')
-      } else {
-        setError(msg)
-      }
+      setError('שגיאת חיבור — בדוק את החיבור לאינטרנט ונסה שוב.')
     }
   }
 
