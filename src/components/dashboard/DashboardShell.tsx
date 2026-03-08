@@ -15,13 +15,12 @@ interface DashboardShellProps {
   userRole: string
 }
 
-// Inner shell that can consume the language context
 function ShellInner({ children, userName, userRole }: DashboardShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { t } = useLang()
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#101A26]">
+    <div className="flex h-screen overflow-hidden bg-[#F4F6F5] dark:bg-[#101A26]">
       <Sidebar
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
@@ -32,20 +31,20 @@ function ShellInner({ children, userName, userRole }: DashboardShellProps) {
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
 
         {/* Mobile top bar */}
-        <header className="flex items-center justify-between border-b border-[#2C3B38] bg-[#172530] px-4 py-3.5 md:hidden">
+        <header className="flex items-center justify-between border-b border-[#D4DEDD] bg-white px-4 py-3.5 dark:border-[#2C3B38] dark:bg-[#172530] md:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="text-[#86968B] transition-colors hover:text-[#F0EDE8]"
+            className="text-[#4A6460] transition-colors hover:text-[#1C2B2A] dark:text-[#86968B] dark:hover:text-[#F0EDE8]"
             aria-label={t.openMenu}
           >
             <Menu size={22} />
           </button>
 
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#C8AA8F]/30 bg-[#C8AA8F]/8">
-              <span className="text-[10px] font-bold tracking-widest text-[#C8AA8F]">IA</span>
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#C8AA8F]/40 bg-[#C8AA8F]/10">
+              <span className="text-[10px] font-bold tracking-widest text-[#A0806A] dark:text-[#C8AA8F]">IA</span>
             </div>
-            <span className="text-sm font-semibold text-[#F0EDE8]">{t.brand.mobile}</span>
+            <span className="text-sm font-semibold text-[#1C2B2A] dark:text-[#F0EDE8]">{t.brand.mobile}</span>
           </div>
 
           <div className="flex items-center gap-1">
@@ -63,7 +62,6 @@ function ShellInner({ children, userName, userRole }: DashboardShellProps) {
   )
 }
 
-// Outer shell provides the context — this is what the layout renders
 export default function DashboardShell(props: DashboardShellProps) {
   return (
     <ThemeProvider>

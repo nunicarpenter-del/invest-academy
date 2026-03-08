@@ -65,7 +65,7 @@ export default function LoginForm() {
     <div className="space-y-5">
 
       {/* Portal selector (Client / Partner tabs) */}
-      <div className="flex gap-1 rounded-xl border border-[#2C3B38] bg-[#101A26] p-1">
+      <div className="flex gap-1 rounded-xl border border-[#D4DEDD] bg-[#EEF1F0] p-1">
         {(['client', 'partner'] as Portal[]).map(p => (
           <button
             key={p}
@@ -73,8 +73,8 @@ export default function LoginForm() {
             onClick={() => setPortal(p)}
             className={`flex-1 rounded-lg py-2 text-xs font-semibold uppercase tracking-widest transition-all duration-200 ${
               portal === p
-                ? 'bg-[#C8AA8F] text-[#101A26]'
-                : 'text-[#86968B] hover:text-[#F0EDE8]'
+                ? 'bg-[#A0806A] text-white shadow-sm'
+                : 'text-[#4A6460] hover:text-[#1C2B2A]'
             }`}
           >
             {p === 'client' ? 'Client' : 'Partner'}
@@ -93,7 +93,7 @@ export default function LoginForm() {
 
         {/* Email */}
         <div className="space-y-2">
-          <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-widest text-[#86968B]">
+          <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-widest text-[#4A6460]">
             Email Address
           </label>
           <input
@@ -104,13 +104,13 @@ export default function LoginForm() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="your@email.com"
-            className="w-full rounded-xl border border-[#2C3B38] bg-[#101A26] px-4 py-3 text-sm text-[#F0EDE8] placeholder-[#445147] outline-none transition-all duration-200 focus:border-[#C8AA8F] focus:ring-1 focus:ring-[#C8AA8F]/50"
+            className="w-full rounded-xl border border-[#D4DEDD] bg-[#F4F6F5] px-4 py-3 text-sm text-[#1C2B2A] placeholder-[#9BB0AC] outline-none transition-all duration-200 focus:border-[#C8AA8F] focus:ring-1 focus:ring-[#C8AA8F]/50"
           />
         </div>
 
         {/* Password */}
         <div className="space-y-2">
-          <label htmlFor="password" className="block text-xs font-semibold uppercase tracking-widest text-[#86968B]">
+          <label htmlFor="password" className="block text-xs font-semibold uppercase tracking-widest text-[#4A6460]">
             Password
           </label>
           <div className="relative">
@@ -122,13 +122,13 @@ export default function LoginForm() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••••••"
-              className="w-full rounded-xl border border-[#2C3B38] bg-[#101A26] px-4 py-3 pr-12 text-sm text-[#F0EDE8] placeholder-[#445147] outline-none transition-all duration-200 focus:border-[#C8AA8F] focus:ring-1 focus:ring-[#C8AA8F]/50"
+              className="w-full rounded-xl border border-[#D4DEDD] bg-[#F4F6F5] px-4 py-3 pr-12 text-sm text-[#1C2B2A] placeholder-[#9BB0AC] outline-none transition-all duration-200 focus:border-[#C8AA8F] focus:ring-1 focus:ring-[#C8AA8F]/50"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#445147] transition-colors hover:text-[#C8AA8F]"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#9BB0AC] transition-colors hover:text-[#A0806A]"
             >
               {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
@@ -139,7 +139,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#C8AA8F] px-6 py-3.5 text-sm font-semibold tracking-wide text-[#101A26] transition-all duration-200 hover:bg-[#D4B99E] hover:shadow-lg hover:shadow-[#C8AA8F]/10 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#A0806A] px-6 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-200 hover:bg-[#8B6E5A] hover:shadow-lg hover:shadow-[#A0806A]/20 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <>
@@ -177,8 +177,8 @@ export default function LoginForm() {
 
         {/* Security line */}
         <div className="flex items-center justify-center gap-1.5 pt-1">
-          <Lock size={11} className="text-[#445147]" />
-          <span className="text-xs text-[#445147]">256-bit encrypted · Secured by Supabase</span>
+          <Lock size={11} className="text-[#9BB0AC]" />
+          <span className="text-xs text-[#9BB0AC]">256-bit encrypted · Secured by Supabase</span>
         </div>
 
       </form>

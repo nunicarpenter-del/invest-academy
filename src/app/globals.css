@@ -50,20 +50,61 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* ── Brand palette (use as bg-brand-gold, text-brand-muted, etc.) ── */
-  --color-brand-darkest: #101A26;
-  --color-brand-card:    #20302F;
+  /* ── Brand palette ─────────────────────────────────────────────────── */
   --color-brand-gold:    #C8AA8F;
   --color-brand-muted:   #86968B;
   --color-brand-forest:  #445147;
   --color-brand-border:  #2C3B38;
-  --color-brand-input:   #162030;
 }
 
-/* ── Always-dark design system ─────────────────────────────────────── */
+/* ── Light theme (default) ─────────────────────────────────────────── */
 :root {
   --radius: 0.75rem;
 
+  --background:          #FFFFFF;
+  --foreground:          #1C2B2A;
+
+  --card:                #F4F6F5;
+  --card-foreground:     #1C2B2A;
+
+  --popover:             #FFFFFF;
+  --popover-foreground:  #1C2B2A;
+
+  --primary:             #A0806A;
+  --primary-foreground:  #FFFFFF;
+
+  --secondary:           #E8EDEB;
+  --secondary-foreground:#1C2B2A;
+
+  --muted:               #E8EDEB;
+  --muted-foreground:    #4A6460;
+
+  --accent:              #C8AA8F;
+  --accent-foreground:   #1C2B2A;
+
+  --destructive:         oklch(0.55 0.22 25);
+  --border:              #D4DEDD;
+  --input:               #EEF1F0;
+  --ring:                #C8AA8F;
+
+  --chart-1: #A0806A;
+  --chart-2: #4A6460;
+  --chart-3: #6E9490;
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  --sidebar:                    #F4F6F5;
+  --sidebar-foreground:         #1C2B2A;
+  --sidebar-primary:            #A0806A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent:             #E8EDEB;
+  --sidebar-accent-foreground:  #1C2B2A;
+  --sidebar-border:             #D4DEDD;
+  --sidebar-ring:               #C8AA8F;
+}
+
+/* ── Dark theme ────────────────────────────────────────────────────── */
+.dark {
   --background:          #101A26;
   --foreground:          #F0EDE8;
 
@@ -96,7 +137,7 @@
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
 
-  --sidebar:                    #20302F;
+  --sidebar:                    #172530;
   --sidebar-foreground:         #F0EDE8;
   --sidebar-primary:            #C8AA8F;
   --sidebar-primary-foreground: #101A26;

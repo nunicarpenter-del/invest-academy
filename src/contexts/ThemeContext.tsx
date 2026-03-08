@@ -7,14 +7,14 @@ type Theme = 'dark' | 'light'
 const ThemeContext = createContext<{
   theme: Theme
   toggleTheme: () => void
-}>({ theme: 'dark', toggleTheme: () => {} })
+}>({ theme: 'light', toggleTheme: () => {} })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark')
+  const [theme, setTheme] = useState<Theme>('light')
 
   useEffect(() => {
     const stored = localStorage.getItem('ia-theme') as Theme | null
-    const resolved = stored ?? 'dark'
+    const resolved = stored ?? 'light'
     setTheme(resolved)
     document.documentElement.classList.toggle('dark', resolved === 'dark')
   }, [])

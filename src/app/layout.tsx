@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="he" dir="rtl" className="dark" suppressHydrationWarning>
+    <html lang="he" dir="rtl" suppressHydrationWarning>
       <body className={`${assistant.variable} font-sans antialiased`}>
         {children}
       </body>
