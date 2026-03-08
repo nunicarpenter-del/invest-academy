@@ -1,0 +1,10 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shield base -->
+  <path d="M20 3L5 9v10c0 8.5 6.4 16.4 15 18.4C28.6 35.4 35 27.5 35 19V9L20 3z" fill="#C8AA8F" fill-opacity="0.15" stroke="#C8AA8F" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Rising bars -->
+  <rect x="10" y="22" width="4" height="8" rx="1" fill="#C8AA8F"/>
+  <rect x="16" y="17" width="4" height="13" rx="1" fill="#A0806A"/>
+  <rect x="22" y="12" width="4" height="18" rx="1" fill="#C8AA8F"/>
+  <!-- Trend arrow -->
+  <path d="M11 21l5-5 4 3 6-7" stroke="#C8AA8F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

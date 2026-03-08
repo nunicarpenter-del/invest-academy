@@ -1,21 +1,21 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import LoginForm from '@/components/auth/LoginForm'
 
 export const metadata: Metadata = {
-  title: 'Sign In — The Investment Academy',
+  title: 'כניסה — האקדמיה להשקעות',
 }
 
 export default function LoginPage() {
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#F7F8F7] p-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#F7F8F7] p-4" dir="rtl">
 
-      {/* Subtle gold glow — top */}
+      {/* Subtle gold glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[400px]"
         style={{
-          background:
-            'radial-gradient(ellipse 70% 40% at 50% -5%, rgba(200,170,143,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 70% 40% at 50% -5%, rgba(200,170,143,0.14) 0%, transparent 70%)',
         }}
       />
 
@@ -26,15 +26,19 @@ export default function LoginPage() {
 
           {/* Brand mark */}
           <div className="mb-8 flex flex-col items-center text-center">
-            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl border border-[#C8AA8F]/40 bg-[#C8AA8F]/10">
-              <span className="text-lg font-bold tracking-[0.15em] text-[#A0806A]">
-                IA
-              </span>
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-[#C8AA8F]/30 bg-[#C8AA8F]/8 shadow-sm">
+              <Image
+                src="/logo.svg"
+                alt="האקדמיה להשקעות"
+                width={40}
+                height={40}
+                priority
+              />
             </div>
-            <h1 className="text-lg font-semibold tracking-wide text-[#1C2B2A]">
-              The Investment Academy
+            <h1 className="text-xl font-bold tracking-wide text-[#1C2B2A]">
+              האקדמיה להשקעות
             </h1>
-            <p className="mt-1 text-xs text-[#4A6460]">כניסה לפורטל האישי שלך</p>
+            <p className="mt-1 text-sm text-[#4A6460]">מרכז הפיקוד הפיננסי שלך</p>
           </div>
 
           {/* Divider */}
@@ -46,8 +50,8 @@ export default function LoginPage() {
         </div>
 
         {/* Footer */}
-        <p className="mt-6 text-center text-xs text-[#4A6460]">
-          © {new Date().getFullYear()} The Investment Academy. All rights reserved.
+        <p className="mt-6 text-center text-xs text-[#9BB0AC]">
+          © {new Date().getFullYear()} האקדמיה להשקעות. כל הזכויות שמורות.
         </p>
 
       </div>

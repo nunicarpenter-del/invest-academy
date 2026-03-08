@@ -6,6 +6,7 @@ import {
   LayoutDashboard, PieChart, Wallet,
   CalendarDays, GraduationCap, Home, LogOut, X, Landmark, Banknote, Shield,
 } from 'lucide-react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { useLang } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
@@ -56,7 +57,7 @@ export default function Sidebar({ open, onClose, userName, userRole }: SidebarPr
         <div className="flex items-center justify-between border-b border-[#D4DEDD] dark:border-[#2C3B38] px-5 py-5">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#C8AA8F]/40 bg-[#C8AA8F]/10">
-              <span className="text-sm font-bold tracking-widest text-[#A0806A] dark:text-[#C8AA8F]">IA</span>
+              <Image src="/logo.svg" alt="לוגו" width={22} height={22} />
             </div>
             <div className="leading-none">
               <p className="text-sm font-semibold text-[#1C2B2A] dark:text-[#F0EDE8]">{t.brand.line1}</p>

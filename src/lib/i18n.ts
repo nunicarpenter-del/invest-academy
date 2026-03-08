@@ -9,7 +9,7 @@ const he = {
   dir: 'rtl' as 'rtl' | 'ltr',
 
   // Sidebar / Shell
-  brand:       { line1: 'אקדמיית', line2: 'ההשקעות', mobile: 'אקדמיית ההשקעות' },
+  brand:       { line1: 'האקדמיה', line2: 'להשקעות', mobile: 'האקדמיה להשקעות' },
   nav: {
     dashboard:  'לוח בקרה',
     properties: 'נכסים',

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Menu } from 'lucide-react'
+import Image from 'next/image'
 import Sidebar from './Sidebar'
 import { LanguageProvider, useLang } from '@/contexts/LanguageContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
@@ -42,7 +43,7 @@ function ShellInner({ children, userName, userRole }: DashboardShellProps) {
 
           <div className="flex items-center gap-2">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#C8AA8F]/40 bg-[#C8AA8F]/10">
-              <span className="text-[10px] font-bold tracking-widest text-[#A0806A] dark:text-[#C8AA8F]">IA</span>
+              <Image src="/logo.svg" alt="לוגו" width={18} height={18} />
             </div>
             <span className="text-sm font-semibold text-[#1C2B2A] dark:text-[#F0EDE8]">{t.brand.mobile}</span>
           </div>

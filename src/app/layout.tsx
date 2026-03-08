@@ -10,8 +10,8 @@ const assistant = Assistant({
 })
 
 export const metadata: Metadata = {
-  title: 'The Investment Academy',
-  description: 'Your private financial command center.',
+  title: 'האקדמיה להשקעות',
+  description: 'מרכז הפיקוד הפיננסי האישי שלך.',
 }
 
 export default function RootLayout({
