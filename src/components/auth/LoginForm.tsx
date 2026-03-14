@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Loader2, ShieldCheck, ArrowRight, MailCheck } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
@@ -73,6 +73,35 @@ export default function LoginForm() {
   const [success, setSuccess] = useState<string | null>(null)
 
   const router = useRouter()
+
+  // ── Password-recovery redirect ─────────────────────────────────────────────
+  // Supabase sends recovery links as /login#access_token=...&type=recovery
+  // The hash is invisible to SSR, so we handle it here on the client.
+  useEffect(() => {
+    const supabase = createClient()
+
+    // 1. Listen for PASSWORD_RECOVERY event (fired by detectSessionInUrl or setSession below)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        router.push('/auth/update-password')
+      }
+    })
+
+    // 2. Manually parse the hash and call setSession so the event fires
+    //    even if the Supabase client already initialised before our listener.
+    const hash = window.location.hash
+    if (hash.includes('type=recovery')) {
+      const params = new URLSearchParams(hash.slice(1))
+      const accessToken  = params.get('access_token')
+      const refreshToken = params.get('refresh_token') ?? ''
+      if (accessToken) {
+        supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken })
+        // onAuthStateChange fires PASSWORD_RECOVERY → redirect handled above
+      }
+    }
+
+    return () => subscription.unsubscribe()
+  }, [router])
 
   function reset() {
     setLoading(false); setError(null); setSuccess(null)
