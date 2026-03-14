@@ -19,7 +19,7 @@ import ServiceHubWidget from '@/components/dashboard/ServiceHubWidget'
 
 const AllocationChart = dynamic(
   () => import('@/components/dashboard/AllocationChart'),
-  { ssr: false, loading: () => <div className="h-52 animate-pulse rounded-xl bg-[#E8E3DC]" /> },
+  { ssr: false, loading: () => <div className="h-52 animate-pulse rounded-xl bg-muted" /> },
 )
 
 // ── Board config ──────────────────────────────────────────────────────────
@@ -197,36 +197,38 @@ export default function DashboardClient({
       {/* ── Header ─────────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between">
         <div>
-          <p className="mb-1 text-xs font-semibold tracking-widest text-[#9BB0AC]">{today}</p>
-          <h1 className="text-2xl font-semibold text-[#1C2B2A]">
+          <p className="mb-1 text-xs font-semibold tracking-widest text-subtle">{today}</p>
+          <h1 className="text-2xl font-semibold text-foreground">
             {d.greeting}{' '}
-            <span className="text-[#A0806A]">{firstName}</span>
+            <span className="text-primary">{firstName}</span>
           </h1>
-          <p className="mt-1 text-sm text-[#4A6460]">{d.subtitle}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{d.subtitle}</p>
         </div>
-        <div className="hidden md:flex h-11 w-11 items-center justify-center rounded-xl border border-[#C8AA8F]/30 bg-[#C8AA8F]/10">
-          <Landmark size={20} className="text-[#A0806A]" />
+        <div className="hidden md:flex h-11 w-11 items-center justify-center rounded-xl border border-primary/30 bg-primary/10">
+          <Landmark size={20} className="text-primary" />
         </div>
       </div>
 
       {/* ── Net Worth Hero ──────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden rounded-2xl border border-[#C8AA8F]/25 bg-gradient-to-br from-[#F5EFE6] via-[#EDE5D6] to-[#E5DBCC] p-6 shadow-sm lg:p-8">
+      <section className="relative overflow-hidden rounded-2xl border border-primary/25 p-6 shadow-sm lg:p-8
+        bg-gradient-to-br from-[#F5EFE6] via-[#EDE5D6] to-[#E5DBCC]
+        dark:from-[#1E2F3D] dark:via-[#172530] dark:to-[#131E2B]">
         {/* subtle gold shimmer */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#C8AA8F]/50 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
         <div className="grid gap-8 lg:grid-cols-[1fr_auto]">
           {/* Left: big NW number */}
           <div>
-            <p className="mb-1 text-xs font-semibold tracking-widest text-[#9BB0AC]">{s.netWorth}</p>
+            <p className="mb-1 text-xs font-semibold tracking-widest text-subtle">{s.netWorth}</p>
             <div className="flex items-end gap-3 flex-wrap">
-              <p className="text-4xl font-black tracking-tight text-[#1C2B2A]">
+              <p className="text-4xl font-black tracking-tight text-foreground">
                 {fmt(totalNetWorth)}
               </p>
               {cashFlowTrend !== null && (
                 <span className={`mb-1 rounded-full px-2.5 py-1 text-xs font-semibold ${
                   netCashFlow >= lastMonthNet
-                    ? 'bg-emerald-100 text-emerald-700'
-                    : 'bg-red-100 text-red-600'
+                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                    : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
                 }`}>
                   {cashFlowTrend >= 0 ? '↑' : '↓'} {Math.abs(cashFlowTrend).toFixed(1)}%
                 </span>
@@ -235,13 +237,13 @@ export default function DashboardClient({
 
             {/* Equity progress bar */}
             <div className="mt-5">
-              <div className="mb-1.5 flex justify-between text-xs text-[#4A6460]">
+              <div className="mb-1.5 flex justify-between text-xs text-muted-foreground">
                 <span>{lang === 'he' ? 'הון עצמי' : 'Equity'} {equityPct.toFixed(1)}%</span>
                 <span>{lang === 'he' ? 'ממומן' : 'Financed'} {(100 - equityPct).toFixed(1)}%</span>
               </div>
-              <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#D4DEDD]">
+              <div className="h-2.5 w-full overflow-hidden rounded-full bg-border">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#C8AA8F]/70 to-[#A0806A] transition-all duration-700"
+                  className="h-full rounded-full bg-gradient-to-r from-primary/70 to-primary transition-all duration-700"
                   style={{ width: `${equityPct}%` }}
                 />
               </div>
@@ -250,17 +252,17 @@ export default function DashboardClient({
 
           {/* Right: 3 sub-KPIs */}
           <div className="grid grid-cols-3 gap-4 lg:grid-cols-1 lg:gap-3">
-            <div className="rounded-xl bg-white/70 px-4 py-3 shadow-sm">
-              <p className="text-xs text-[#9BB0AC]">{s.totalAssets}</p>
-              <p className="mt-0.5 text-base font-bold text-[#1C2B2A]">{fmt(totalAssets)}</p>
+            <div className="rounded-xl bg-white/70 dark:bg-[#101A26]/40 px-4 py-3 shadow-sm">
+              <p className="text-xs text-subtle">{s.totalAssets}</p>
+              <p className="mt-0.5 text-base font-bold text-foreground">{fmt(totalAssets)}</p>
             </div>
-            <div className="rounded-xl bg-white/70 px-4 py-3 shadow-sm">
-              <p className="text-xs text-[#9BB0AC]">{s.totalDebt}</p>
-              <p className="mt-0.5 text-base font-bold text-red-600">{fmt(grandTotalDebt)}</p>
+            <div className="rounded-xl bg-white/70 dark:bg-[#101A26]/40 px-4 py-3 shadow-sm">
+              <p className="text-xs text-subtle">{s.totalDebt}</p>
+              <p className="mt-0.5 text-base font-bold text-red-600 dark:text-red-400">{fmt(grandTotalDebt)}</p>
             </div>
-            <div className="rounded-xl bg-white/70 px-4 py-3 shadow-sm">
-              <p className="text-xs text-[#9BB0AC]">{s.monthlySurplus}</p>
-              <p className={`mt-0.5 text-base font-bold ${netCashFlow >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+            <div className="rounded-xl bg-white/70 dark:bg-[#101A26]/40 px-4 py-3 shadow-sm">
+              <p className="text-xs text-subtle">{s.monthlySurplus}</p>
+              <p className={`mt-0.5 text-base font-bold ${netCashFlow >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
                 {fmtSigned(netCashFlow)}
               </p>
             </div>
@@ -270,20 +272,20 @@ export default function DashboardClient({
 
       {/* ── Financial Freedom Gauge ────────────────────────────────────── */}
       {FIRE_TARGET > 0 && (
-        <section className="rounded-2xl border border-[#E8E3DC] bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
           <div className="mb-4 flex items-start justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-[#1C2B2A]">{s.fireTitle}</h2>
-              <p className="mt-0.5 text-xs text-[#4A6460]">{s.fireSubtitle}</p>
+              <h2 className="text-sm font-semibold text-foreground">{s.fireTitle}</h2>
+              <p className="mt-0.5 text-xs text-muted-foreground">{s.fireSubtitle}</p>
             </div>
-            <span className="rounded-full border border-[#C8AA8F]/30 bg-[#C8AA8F]/10 px-3 py-1 text-xs font-bold text-[#A0806A]">
+            <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
               {firePct.toFixed(1)}%
             </span>
           </div>
 
           {/* Progress bar */}
           <div className="mb-3">
-            <div className="h-3 w-full overflow-hidden rounded-full bg-[#E8E3DC]">
+            <div className="h-3 w-full overflow-hidden rounded-full bg-muted">
               <div
                 className="h-full rounded-full transition-all duration-700"
                 style={{
@@ -291,8 +293,8 @@ export default function DashboardClient({
                   background: firePct >= 100
                     ? '#059669'
                     : firePct >= 50
-                    ? 'linear-gradient(90deg, #C8AA8F80, #A0806A)'
-                    : 'linear-gradient(90deg, #9BB0AC80, #A0806A)',
+                    ? 'linear-gradient(90deg, var(--color-primary,#C8AA8F)80, var(--color-primary,#A0806A))'
+                    : 'linear-gradient(90deg, #9BB0AC80, var(--color-primary,#A0806A))',
                 }}
               />
             </div>
@@ -300,16 +302,16 @@ export default function DashboardClient({
 
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-xs text-[#9BB0AC]">{lang === 'he' ? 'שווי נטו' : 'Net Worth'}</p>
-              <p className="mt-0.5 text-sm font-bold text-[#A0806A]">{fmt(totalNetWorth)}</p>
+              <p className="text-xs text-subtle">{lang === 'he' ? 'שווי נטו' : 'Net Worth'}</p>
+              <p className="mt-0.5 text-sm font-bold text-primary">{fmt(totalNetWorth)}</p>
             </div>
             <div>
-              <p className="text-xs text-[#9BB0AC]">{s.fireTarget}</p>
-              <p className="mt-0.5 text-sm font-bold text-[#1C2B2A]">{fmt(FIRE_TARGET)}</p>
+              <p className="text-xs text-subtle">{s.fireTarget}</p>
+              <p className="mt-0.5 text-sm font-bold text-foreground">{fmt(FIRE_TARGET)}</p>
             </div>
             <div>
-              <p className="text-xs text-[#9BB0AC]">{lang === 'he' ? 'לפרישה' : 'To Freedom'}</p>
-              <p className={`mt-0.5 text-sm font-bold ${firePct >= 100 ? 'text-emerald-600' : 'text-amber-600'}`}>
+              <p className="text-xs text-subtle">{lang === 'he' ? 'לפרישה' : 'To Freedom'}</p>
+              <p className={`mt-0.5 text-sm font-bold ${firePct >= 100 ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>
                 {firePct >= 100
                   ? s.fireReached
                   : yearsToFIRE != null
@@ -323,7 +325,7 @@ export default function DashboardClient({
 
       {/* ── 4 KPI Cards ────────────────────────────────────────────────── */}
       <section>
-        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#9BB0AC]">
+        <h2 className="mb-4 text-xs font-semibold tracking-widest text-subtle">
           {d.financialOverview}
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -361,13 +363,13 @@ export default function DashboardClient({
       {/* ── Charts row ──────────────────────────────────────────────────── */}
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Asset allocation — 5 pillars */}
-        <div className="rounded-2xl border border-[#E8E3DC] bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
           <div className="mb-5 flex items-start justify-between">
             <div>
-              <h3 className="text-sm font-semibold text-[#1C2B2A]">{al.title}</h3>
-              <p className="text-xs text-[#4A6460]">{al.subtitle}</p>
+              <h3 className="text-sm font-semibold text-foreground">{al.title}</h3>
+              <p className="text-xs text-muted-foreground">{al.subtitle}</p>
             </div>
-            <div className="hidden md:flex flex-col gap-1 text-xs text-[#4A6460]">
+            <div className="hidden md:flex flex-col gap-1 text-xs text-muted-foreground">
               {[
                 { label: al.realEstate, color: '#4A6460' },
                 { label: al.stocks,     color: '#A0806A' },
@@ -386,11 +388,11 @@ export default function DashboardClient({
         </div>
 
         {/* 5-Pillar breakdown table */}
-        <div className="rounded-2xl border border-[#E8E3DC] bg-white p-6 shadow-sm">
-          <h3 className="mb-1 text-sm font-semibold text-[#1C2B2A]">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 className="mb-1 text-sm font-semibold text-foreground">
             {lang === 'he' ? 'פירוט כל עמודות ההון' : 'All Pillars Breakdown'}
           </h3>
-          <p className="mb-5 text-xs text-[#4A6460]">
+          <p className="mb-5 text-xs text-muted-foreground">
             {lang === 'he' ? 'ערך, הון עצמי ולינק לכל לוח' : 'Value, equity & link to each board'}
           </p>
           <div className="space-y-2">
@@ -398,7 +400,7 @@ export default function DashboardClient({
               <Link
                 key={p.href}
                 href={p.href}
-                className="group flex items-center justify-between rounded-xl border border-[#E8E3DC] bg-[#F7F5F2] px-4 py-3 transition-all hover:border-[#C8AA8F]/30 hover:bg-[#F4F0EA]"
+                className="group flex items-center justify-between rounded-xl border border-border bg-muted/40 px-4 py-3 transition-all hover:border-primary/30 hover:bg-muted dark:bg-muted/20 dark:hover:bg-muted/40"
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -408,9 +410,9 @@ export default function DashboardClient({
                     <p.icon size={14} style={{ color: p.color }} />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#1C2B2A]">{p.label}</p>
+                    <p className="text-sm font-medium text-foreground">{p.label}</p>
                     {p.equity && (
-                      <p className="text-xs text-[#9BB0AC]">
+                      <p className="text-xs text-subtle">
                         {lang === 'he' ? 'הון עצמי:' : 'Equity:'} {p.equity}
                       </p>
                     )}
@@ -422,18 +424,18 @@ export default function DashboardClient({
                   </span>
                   <ChevronRight
                     size={12}
-                    className="text-[#9BB0AC] transition-colors group-hover:text-[#A0806A]"
+                    className="text-subtle transition-colors group-hover:text-primary"
                   />
                 </div>
               </Link>
             ))}
           </div>
           {/* Net Worth total row */}
-          <div className="mt-3 flex items-center justify-between rounded-xl border border-[#C8AA8F]/25 bg-[#C8AA8F]/8 px-4 py-3">
-            <span className="text-sm font-semibold text-[#A0806A]">
+          <div className="mt-3 flex items-center justify-between rounded-xl border border-primary/25 bg-primary/[0.08] px-4 py-3">
+            <span className="text-sm font-semibold text-primary">
               {lang === 'he' ? '= שווי נטו' : '= Net Worth'}
             </span>
-            <span className="text-base font-black text-[#A0806A]">{fmt(totalNetWorth)}</span>
+            <span className="text-base font-black text-primary">{fmt(totalNetWorth)}</span>
           </div>
         </div>
       </section>
@@ -441,113 +443,115 @@ export default function DashboardClient({
       {/* ── Cash Flow + Mortgage Snapshot ──────────────────────────────── */}
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {/* Net cash flow */}
-        <div className="relative overflow-hidden rounded-2xl border border-[#E8E3DC] bg-white p-5 shadow-sm">
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="absolute inset-x-0 top-0 h-[2px]"
                style={{ background: 'linear-gradient(90deg, transparent, #4A6460, transparent)' }} />
           <div className="mb-3 flex items-center justify-between">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#4A6460]/10">
-              <Wallet size={17} className="text-[#4A6460]" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted">
+              <Wallet size={17} className="text-muted-foreground" />
             </div>
             {cashFlowTrend !== null && (
               <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                cashFlowTrend >= 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-600'
+                cashFlowTrend >= 0
+                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                  : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
               }`}>
                 {cashFlowTrend >= 0 ? '↑' : '↓'} {Math.abs(cashFlowTrend).toFixed(1)}%
               </span>
             )}
           </div>
-          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#4A6460]">{s.cashFlow}</p>
-          <p className={`text-2xl font-bold ${netCashFlow >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{s.cashFlow}</p>
+          <p className={`text-2xl font-bold ${netCashFlow >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
             {hasCashFlowData ? fmtSigned(netCashFlow) : '—'}
           </p>
-          <p className="mt-1 text-xs text-[#9BB0AC]">{hasCashFlowData ? s.cashFlowSub : s.cashFlowEmpty}</p>
+          <p className="mt-1 text-xs text-subtle">{hasCashFlowData ? s.cashFlowSub : s.cashFlowEmpty}</p>
           {hasCashFlowData && (
-            <div className="mt-4 space-y-2 border-t border-[#E8E3DC] pt-4">
+            <div className="mt-4 space-y-2 border-t border-border pt-4">
               <div className="flex justify-between text-xs">
-                <span className="text-[#4A6460]">{lang === 'he' ? 'הכנסות' : 'Income'}</span>
-                <span className="font-semibold text-emerald-600">
+                <span className="text-muted-foreground">{lang === 'he' ? 'הכנסות' : 'Income'}</span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                   {totalMonthlyIncome > 0 ? `+${fmt(totalMonthlyIncome)}` : '—'}
                 </span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#4A6460]">{lang === 'he' ? 'הוצאות' : 'Expenses'}</span>
-                <span className="font-semibold text-red-600">
+                <span className="text-muted-foreground">{lang === 'he' ? 'הוצאות' : 'Expenses'}</span>
+                <span className="font-semibold text-red-600 dark:text-red-400">
                   {totalMonthlyExpenses > 0 ? `-${fmt(totalMonthlyExpenses)}` : '—'}
                 </span>
               </div>
-              <div className="flex justify-between border-t border-[#E8E3DC] pt-2 text-xs">
-                <span className="font-semibold text-[#1C2B2A]">{lang === 'he' ? 'נטו' : 'Net'}</span>
-                <span className={`font-bold ${netCashFlow >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+              <div className="flex justify-between border-t border-border pt-2 text-xs">
+                <span className="font-semibold text-foreground">{lang === 'he' ? 'נטו' : 'Net'}</span>
+                <span className={`font-bold ${netCashFlow >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
                   {fmtSigned(netCashFlow)}
                 </span>
               </div>
             </div>
           )}
-          <Link href="/dashboard/cashflow" className="mt-4 flex items-center gap-1 text-xs text-[#9BB0AC] hover:text-[#A0806A] transition-colors">
+          <Link href="/dashboard/cashflow" className="mt-4 flex items-center gap-1 text-xs text-subtle hover:text-primary transition-colors">
             {lang === 'he' ? 'לוח תזרים' : 'Cash Flow Board'} <ArrowRight size={11} />
           </Link>
         </div>
 
         {/* Capital snapshot */}
-        <div className="relative overflow-hidden rounded-2xl border border-[#E8E3DC] bg-white p-5 shadow-sm">
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="absolute inset-x-0 top-0 h-[2px]"
                style={{ background: 'linear-gradient(90deg, transparent, #05966944, transparent)' }} />
-          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50">
-            <Vault size={17} className="text-emerald-600" />
+          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-900/20">
+            <Vault size={17} className="text-emerald-600 dark:text-emerald-400" />
           </div>
-          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#4A6460]">{s.capitalSources}</p>
-          <p className="text-2xl font-bold text-emerald-600">
+          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{s.capitalSources}</p>
+          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
             {capitalSourcesTotal > 0 ? fmt(capitalSourcesTotal) : '—'}
           </p>
-          <p className="mt-1 text-xs text-[#9BB0AC]">{s.capitalSourcesSub}</p>
+          <p className="mt-1 text-xs text-subtle">{s.capitalSourcesSub}</p>
           {capitalSourcesTotal > 0 && (
-            <div className="mt-4 space-y-2 border-t border-[#E8E3DC] pt-4">
+            <div className="mt-4 space-y-2 border-t border-border pt-4">
               <div className="flex justify-between text-xs">
-                <span className="text-[#4A6460]">{lang === 'he' ? 'נזיל עכשיו' : 'Liquid now'}</span>
-                <span className="font-semibold text-emerald-600">{fmt(capitalLiquid)}</span>
+                <span className="text-muted-foreground">{lang === 'he' ? 'נזיל עכשיו' : 'Liquid now'}</span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">{fmt(capitalLiquid)}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#4A6460]">{lang === 'he' ? 'נעול / עתידי' : 'Locked / future'}</span>
-                <span className="font-semibold text-amber-600">{fmt(capitalSourcesTotal - capitalLiquid)}</span>
+                <span className="text-muted-foreground">{lang === 'he' ? 'נעול / עתידי' : 'Locked / future'}</span>
+                <span className="font-semibold text-amber-600 dark:text-amber-400">{fmt(capitalSourcesTotal - capitalLiquid)}</span>
               </div>
             </div>
           )}
-          <Link href="/dashboard/capital" className="mt-4 flex items-center gap-1 text-xs text-[#9BB0AC] hover:text-[#A0806A] transition-colors">
+          <Link href="/dashboard/capital" className="mt-4 flex items-center gap-1 text-xs text-subtle hover:text-primary transition-colors">
             {lang === 'he' ? 'לוח מקורות הון' : 'Capital Board'} <ArrowRight size={11} />
           </Link>
         </div>
 
         {/* Mortgage snapshot */}
-        <div className="relative overflow-hidden rounded-2xl border border-red-200 bg-white p-5 shadow-sm">
+        <div className="relative overflow-hidden rounded-2xl border border-red-200 dark:border-red-900/30 bg-card p-5 shadow-sm">
           <div className="absolute inset-x-0 top-0 h-[2px]"
                style={{ background: 'linear-gradient(90deg, transparent, #DC262644, transparent)' }} />
-          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-red-50">
-            <Banknote size={17} className="text-red-600" />
+          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-red-50 dark:bg-red-900/20">
+            <Banknote size={17} className="text-red-600 dark:text-red-400" />
           </div>
-          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#4A6460]">
+          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             {lang === 'he' ? 'משכנתאות וחוב' : 'Mortgages & Debt'}
           </p>
-          <p className="text-2xl font-bold text-red-600">
+          <p className="text-2xl font-bold text-red-600 dark:text-red-400">
             {totalLoanDebt > 0 ? fmt(totalLoanDebt) : grandTotalDebt > 0 ? fmt(grandTotalDebt) : '—'}
           </p>
-          <p className="mt-1 text-xs text-[#9BB0AC]">{s.totalDebtSub}</p>
+          <p className="mt-1 text-xs text-subtle">{s.totalDebtSub}</p>
           {(totalLoanMonthly > 0 || monthlyDebtService > 0) && (
-            <div className="mt-4 space-y-2 border-t border-[#E8E3DC] pt-4">
+            <div className="mt-4 space-y-2 border-t border-border pt-4">
               <div className="flex justify-between text-xs">
-                <span className="text-[#4A6460]">{lang === 'he' ? 'תשלום חודשי' : 'Monthly payment'}</span>
-                <span className="font-semibold text-red-600">
+                <span className="text-muted-foreground">{lang === 'he' ? 'תשלום חודשי' : 'Monthly payment'}</span>
+                <span className="font-semibold text-red-600 dark:text-red-400">
                   {fmt(totalLoanMonthly || monthlyDebtService)}
                 </span>
               </div>
               {loanCount > 0 && (
                 <div className="flex justify-between text-xs">
-                  <span className="text-[#4A6460]">{lang === 'he' ? 'מספר הלוואות' : 'Active loans'}</span>
-                  <span className="font-semibold text-[#1C2B2A]">{loanCount}</span>
+                  <span className="text-muted-foreground">{lang === 'he' ? 'מספר הלוואות' : 'Active loans'}</span>
+                  <span className="font-semibold text-foreground">{loanCount}</span>
                 </div>
               )}
             </div>
           )}
-          <Link href="/dashboard/mortgages" className="mt-4 flex items-center gap-1 text-xs text-[#9BB0AC] hover:text-[#A0806A] transition-colors">
+          <Link href="/dashboard/mortgages" className="mt-4 flex items-center gap-1 text-xs text-subtle hover:text-primary transition-colors">
             {lang === 'he' ? 'לוח משכנתאות' : 'Mortgage Board'} <ArrowRight size={11} />
           </Link>
         </div>
@@ -561,33 +565,33 @@ export default function DashboardClient({
           { label: lang === 'he' ? 'קריפטו'      : 'Crypto',        value: fmt(cryptoValue),         color: '#D97706', icon: Coins      },
           { label: lang === 'he' ? 'פנסיה וגמל'  : 'Pension',       value: fmt(pensionAssets),       color: '#4F46E5', icon: Landmark   },
         ].map(({ label, value, color, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-[#E8E3DC] bg-white p-4 shadow-sm">
+          <div key={label} className="rounded-xl border border-border bg-card p-4 shadow-sm">
             <div className="mb-3 flex items-center gap-2">
               <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ background: `${color}15` }}>
                 <Icon size={14} style={{ color }} />
               </div>
-              <span className="text-xs text-[#4A6460]">{label}</span>
+              <span className="text-xs text-muted-foreground">{label}</span>
             </div>
-            <p className="text-base font-bold text-[#1C2B2A]">{value}</p>
+            <p className="text-base font-bold text-foreground">{value}</p>
           </div>
         ))}
       </section>
 
       {/* ── Asset allocation chart (full) ───────────────────────────────── */}
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-[#E8E3DC] bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
           <div className="mb-5">
-            <h3 className="text-sm font-semibold text-[#1C2B2A]">{al.title}</h3>
-            <p className="text-xs text-[#4A6460]">{al.subtitle}</p>
+            <h3 className="text-sm font-semibold text-foreground">{al.title}</h3>
+            <p className="text-xs text-muted-foreground">{al.subtitle}</p>
           </div>
           <AllocationChart data={assetData} total={assetTotal} emptyLabel={al.emptyLabel} />
         </div>
 
         {/* Liabilities distribution */}
-        <div className="rounded-2xl border border-red-200 bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-red-200 dark:border-red-900/30 bg-card p-6 shadow-sm">
           <div className="mb-5">
-            <h3 className="text-sm font-semibold text-[#1C2B2A]">{d.liabilities.distributionTitle}</h3>
-            <p className="text-xs text-[#4A6460]">{d.liabilities.distributionSubtitle}</p>
+            <h3 className="text-sm font-semibold text-foreground">{d.liabilities.distributionTitle}</h3>
+            <p className="text-xs text-muted-foreground">{d.liabilities.distributionSubtitle}</p>
           </div>
           <AllocationChart
             data={liabData}
@@ -604,10 +608,10 @@ export default function DashboardClient({
 
       {/* ── Next Meeting ─────────────────────────────────────────────────── */}
       <section>
-        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#9BB0AC]">
+        <h2 className="mb-4 text-xs font-semibold tracking-widest text-subtle">
           {t.meetings.nextMeeting}
         </h2>
-        <div className="relative overflow-hidden rounded-2xl border border-[#E8E3DC] bg-white p-5 shadow-sm">
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm">
           {nextMeeting ? (() => {
             const diff  = daysUntil(nextMeeting.date_time)
             const color = TYPE_COLORS[nextMeeting.meeting_type] ?? '#4A6460'
@@ -622,10 +626,10 @@ export default function DashboardClient({
                     >
                       {t.meetings.types[nextMeeting.meeting_type] as string}
                     </span>
-                    <p className="mt-2 truncate text-base font-semibold text-[#1C2B2A]">
+                    <p className="mt-2 truncate text-base font-semibold text-foreground">
                       {nextMeeting.title}
                     </p>
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#4A6460]">
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <Clock size={11} />
                         {new Date(nextMeeting.date_time).toLocaleDateString(
@@ -652,7 +656,7 @@ export default function DashboardClient({
                     </span>
                     <Link
                       href="/dashboard/meetings"
-                      className="flex items-center gap-1 text-xs text-[#9BB0AC] transition hover:text-[#A0806A]"
+                      className="flex items-center gap-1 text-xs text-subtle transition hover:text-primary"
                     >
                       {t.meetings.viewAll} <ArrowUpRight size={12} />
                     </Link>
@@ -663,14 +667,14 @@ export default function DashboardClient({
           })() : (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#EEF1F0]">
-                  <CalendarDays size={17} className="text-[#4A6460]" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted">
+                  <CalendarDays size={17} className="text-muted-foreground" />
                 </div>
-                <p className="text-sm text-[#4A6460]">{t.meetings.noNextMeeting}</p>
+                <p className="text-sm text-muted-foreground">{t.meetings.noNextMeeting}</p>
               </div>
               <Link
                 href="/dashboard/meetings"
-                className="flex items-center gap-1 text-xs text-[#9BB0AC] transition hover:text-[#A0806A]"
+                className="flex items-center gap-1 text-xs text-subtle transition hover:text-primary"
               >
                 {t.meetings.viewAll} <ArrowUpRight size={12} />
               </Link>
@@ -684,7 +688,7 @@ export default function DashboardClient({
 
       {/* ── Boards Grid ─────────────────────────────────────────────────── */}
       <section>
-        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#9BB0AC]">
+        <h2 className="mb-4 text-xs font-semibold tracking-widest text-subtle">
           {d.yourBoards}
         </h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -694,7 +698,7 @@ export default function DashboardClient({
               <Link
                 key={href}
                 href={href}
-                className="group flex items-start justify-between gap-3 rounded-xl border border-[#E8E3DC] bg-white p-4 shadow-sm transition-all duration-200 hover:border-[#C8AA8F]/30 hover:bg-[#F7F5F2]"
+                className="group flex items-start justify-between gap-3 rounded-xl border border-border bg-card p-4 shadow-sm transition-all duration-200 hover:border-primary/30 hover:bg-muted/40"
               >
                 <div className="flex items-start gap-3">
                   <div
@@ -704,13 +708,13 @@ export default function DashboardClient({
                     <Icon size={15} style={{ color }} />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#1C2B2A] leading-snug">{label}</p>
-                    <p className="mt-0.5 text-xs text-[#4A6460] leading-snug">{desc}</p>
+                    <p className="text-sm font-medium text-foreground leading-snug">{label}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground leading-snug">{desc}</p>
                   </div>
                 </div>
                 <ArrowUpRight
                   size={15}
-                  className="mt-0.5 shrink-0 text-[#9BB0AC] transition-colors group-hover:text-[#A0806A]"
+                  className="mt-0.5 shrink-0 text-subtle transition-colors group-hover:text-primary"
                 />
               </Link>
             )

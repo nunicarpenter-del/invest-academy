@@ -20,7 +20,7 @@ export default function StatCard({
   accentColor = '#C8AA8F',
 }: StatCardProps) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-[#2C3B38] bg-[#20302F] p-6">
+    <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6">
       {/* Top accent line */}
       <div
         className="absolute inset-x-0 top-0 h-[2px]"
@@ -39,8 +39,8 @@ export default function StatCard({
           <span
             className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
               trendUp
-                ? 'bg-emerald-400/10 text-emerald-400'
-                : 'bg-red-400/10 text-red-400'
+                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
             }`}
           >
             {trendUp ? '↑' : '↓'} {trend}
@@ -48,11 +48,11 @@ export default function StatCard({
         )}
       </div>
 
-      <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#86968B]">
+      <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
         {title}
       </p>
-      <p className="mb-1 text-2xl font-bold tracking-tight text-[#F0EDE8]">{value}</p>
-      <p className="text-xs text-[#445147]">{subtitle}</p>
+      <p className="mb-1 text-2xl font-bold tracking-tight text-foreground">{value}</p>
+      <p className="text-xs text-subtle">{subtitle}</p>
     </div>
   )
 }

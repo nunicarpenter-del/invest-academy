@@ -46,27 +46,26 @@ export default function Sidebar({ open, onClose, userName, userRole }: SidebarPr
       <aside
         className={`
           fixed right-0 top-0 z-50 flex h-full w-64 flex-col
-          border-l border-[#D4DEDD] bg-white
-          dark:border-[#2C3B38] dark:bg-[#172530]
+          border-l border-sidebar-border bg-sidebar
           transition-transform duration-300 ease-in-out
           ${open ? 'translate-x-0' : 'translate-x-full'}
           md:relative md:right-auto md:translate-x-0 md:z-auto md:border-l
         `}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between border-b border-[#D4DEDD] dark:border-[#2C3B38] px-5 py-5">
+        <div className="flex items-center justify-between border-b border-sidebar-border px-5 py-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#C8AA8F]/40 bg-[#C8AA8F]/10">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary/40 bg-primary/10">
               <Image src="/logo.svg" alt="לוגו" width={22} height={22} />
             </div>
             <div className="leading-none">
-              <p className="text-sm font-semibold text-[#1C2B2A] dark:text-[#F0EDE8]">{t.brand.line1}</p>
-              <p className="mt-0.5 text-xs text-[#4A6460] dark:text-[#86968B]">{t.brand.line2}</p>
+              <p className="text-sm font-semibold text-sidebar-foreground">{t.brand.line1}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">{t.brand.line2}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-[#4A6460] transition-colors hover:text-[#1C2B2A] dark:text-[#86968B] dark:hover:text-[#F0EDE8] md:hidden"
+            className="text-muted-foreground transition-colors hover:text-sidebar-foreground md:hidden"
             aria-label={t.closeMenu}
           >
             <X size={18} />
@@ -92,8 +91,8 @@ export default function Sidebar({ open, onClose, userName, userRole }: SidebarPr
                   text-sm font-medium transition-all duration-150
                   ${
                     isActive
-                      ? 'border-[#A0806A] bg-[#A0806A]/10 text-[#A0806A] dark:border-[#C8AA8F] dark:bg-[#C8AA8F]/10 dark:text-[#C8AA8F]'
-                      : 'border-transparent text-[#4A6460] hover:bg-[#EEF1F0] hover:text-[#1C2B2A] dark:text-[#86968B] dark:hover:bg-[#2C3B38]/60 dark:hover:text-[#F0EDE8]'
+                      ? 'border-primary bg-primary/10 text-primary'
+                      : 'border-transparent text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground'
                   }
                 `}
               >
@@ -105,19 +104,19 @@ export default function Sidebar({ open, onClose, userName, userRole }: SidebarPr
         </nav>
 
         {/* Footer: user + theme + language + sign out */}
-        <div className="border-t border-[#D4DEDD] dark:border-[#2C3B38] p-4 space-y-2">
-          <div className="rounded-xl bg-[#EEF1F0] dark:bg-[#101A26]/70 px-3 py-2.5">
-            <p className="truncate text-sm font-medium text-[#1C2B2A] dark:text-[#F0EDE8]">
+        <div className="border-t border-sidebar-border p-4 space-y-2">
+          <div className="rounded-xl bg-sidebar-accent px-3 py-2.5">
+            <p className="truncate text-sm font-medium text-sidebar-foreground">
               {userName || t.userFallback}
             </p>
-            <p className="text-xs text-[#4A6460] dark:text-[#86968B]">
+            <p className="text-xs text-muted-foreground">
               {t.roles[userRole] ?? userRole.replace(/_/g, ' ')}
             </p>
           </div>
 
           {/* Language + Theme row */}
-          <div className="flex items-center justify-between rounded-xl border border-[#D4DEDD] dark:border-[#2C3B38] bg-[#F4F6F5] dark:bg-[#101A26]/40 px-3 py-2">
-            <span className="text-xs text-[#4A6460] dark:text-[#445147]">
+          <div className="flex items-center justify-between rounded-xl border border-sidebar-border bg-background/60 px-3 py-2">
+            <span className="text-xs text-muted-foreground">
               {t.nav.dashboard === 'Dashboard' ? 'Language' : 'שפה'}
             </span>
             <div className="flex items-center gap-1">
@@ -128,7 +127,7 @@ export default function Sidebar({ open, onClose, userName, userRole }: SidebarPr
 
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-[#4A6460] dark:text-[#86968B] transition-all hover:bg-red-500/10 hover:text-red-500"
+            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-muted-foreground transition-all hover:bg-red-500/10 hover:text-red-500"
           >
             <LogOut size={15} />
             {t.signOut}

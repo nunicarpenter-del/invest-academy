@@ -55,17 +55,22 @@
   --color-brand-muted:   #86968B;
   --color-brand-forest:  #445147;
   --color-brand-border:  #2C3B38;
+
+  /* ── Semantic extras ────────────────────────────────────────────────── */
+  --color-subtle: var(--subtle);
 }
 
 /* ── Light theme (default) ─────────────────────────────────────────── */
 :root {
   --radius: 0.75rem;
 
-  --background:          #FFFFFF;
+  --background:          #F4F6F5;
   --foreground:          #1C2B2A;
 
-  --card:                #F4F6F5;
+  --card:                #FFFFFF;
   --card-foreground:     #1C2B2A;
+
+  --subtle:              #9BB0AC;
 
   --popover:             #FFFFFF;
   --popover-foreground:  #1C2B2A;
@@ -93,7 +98,7 @@
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
 
-  --sidebar:                    #F4F6F5;
+  --sidebar:                    #FFFFFF;
   --sidebar-foreground:         #1C2B2A;
   --sidebar-primary:            #A0806A;
   --sidebar-primary-foreground: #FFFFFF;
@@ -107,6 +112,8 @@
 .dark {
   --background:          #101A26;
   --foreground:          #F0EDE8;
+
+  --subtle:              #445147;
 
   --card:                #20302F;
   --card-foreground:     #F0EDE8;
