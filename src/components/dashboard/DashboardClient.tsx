@@ -19,24 +19,24 @@ import ServiceHubWidget from '@/components/dashboard/ServiceHubWidget'
 
 const AllocationChart = dynamic(
   () => import('@/components/dashboard/AllocationChart'),
-  { ssr: false, loading: () => <div className="h-52 animate-pulse rounded-xl bg-[#2C3B38]" /> },
+  { ssr: false, loading: () => <div className="h-52 animate-pulse rounded-xl bg-[#E8E3DC]" /> },
 )
 
 // ── Board config ──────────────────────────────────────────────────────────
 const BOARD_CONFIG = [
-  { icon: Wallet,       href: '/dashboard/cashflow',    color: '#86968B' },
-  { icon: Home,         href: '/dashboard/properties',  color: '#C8AA8F' },
-  { icon: BarChart3,    href: '/dashboard/investments', color: '#F59E0B' },
-  { icon: Landmark,     href: '/dashboard/pension',     color: '#6366F1' },
-  { icon: Vault,        href: '/dashboard/capital',     color: '#10B981' },
-  { icon: Banknote,     href: '/dashboard/mortgages',   color: '#EF4444' },
-  { icon: CalendarDays, href: '/dashboard/meetings',    color: '#8B5CF6' },
-  { icon: GraduationCap,href: '/dashboard/academy',     color: '#C8AA8F' },
+  { icon: Wallet,       href: '/dashboard/cashflow',    color: '#4A6460' },
+  { icon: Home,         href: '/dashboard/properties',  color: '#A0806A' },
+  { icon: BarChart3,    href: '/dashboard/investments', color: '#D97706' },
+  { icon: Landmark,     href: '/dashboard/pension',     color: '#4F46E5' },
+  { icon: Vault,        href: '/dashboard/capital',     color: '#059669' },
+  { icon: Banknote,     href: '/dashboard/mortgages',   color: '#DC2626' },
+  { icon: CalendarDays, href: '/dashboard/meetings',    color: '#7C3AED' },
+  { icon: GraduationCap,href: '/dashboard/academy',     color: '#A0806A' },
 ]
 
 const LIAB_COLORS = [
-  '#EF4444', '#F97316', '#FBBF24', '#EC4899',
-  '#8B5CF6', '#06B6D4', '#10B981', '#6366F1',
+  '#DC2626', '#EA580C', '#D97706', '#DB2777',
+  '#7C3AED', '#0891B2', '#059669', '#4F46E5',
 ]
 
 const fmt   = (n: number) => '₪' + Math.abs(Math.round(n)).toLocaleString('he-IL', { maximumFractionDigits: 0 })
@@ -131,11 +131,11 @@ export default function DashboardClient({
   // ── Asset allocation chart ─────────────────────────────────────────────
   const assetTotal = propAssets + stockValue + cryptoValue + pensionAssets + capitalSourcesTotal
   const assetData: AllocationItem[] = [
-    { name: al.realEstate, value: propAssets,          color: '#86968B' },
-    { name: al.stocks,     value: stockValue,          color: '#C8AA8F' },
-    { name: al.crypto,     value: cryptoValue,         color: '#F59E0B' },
-    { name: al.pension,    value: pensionAssets,        color: '#6366F1' },
-    { name: al.capital,    value: capitalSourcesTotal, color: '#10B981' },
+    { name: al.realEstate, value: propAssets,          color: '#4A6460' },
+    { name: al.stocks,     value: stockValue,          color: '#A0806A' },
+    { name: al.crypto,     value: cryptoValue,         color: '#D97706' },
+    { name: al.pension,    value: pensionAssets,        color: '#4F46E5' },
+    { name: al.capital,    value: capitalSourcesTotal, color: '#059669' },
   ].filter(d => d.value > 0)
 
   // ── Liabilities chart ─────────────────────────────────────────────────
@@ -153,7 +153,7 @@ export default function DashboardClient({
       label: lang === 'he' ? 'נדל"ן (שווי)' : 'Real Estate',
       value: fmt(propAssets),
       equity: propAssets > 0 ? fmt(propEquity) : null,
-      color: '#86968B',
+      color: '#4A6460',
       icon: Building2,
       href: '/dashboard/properties',
     },
@@ -161,7 +161,7 @@ export default function DashboardClient({
       label: lang === 'he' ? 'השקעות' : 'Investments',
       value: fmt(portfolioValue),
       equity: null,
-      color: '#C8AA8F',
+      color: '#A0806A',
       icon: BarChart3,
       href: '/dashboard/investments',
     },
@@ -169,7 +169,7 @@ export default function DashboardClient({
       label: lang === 'he' ? 'פנסיה וגמל' : 'Pension',
       value: fmt(pensionAssets),
       equity: null,
-      color: '#6366F1',
+      color: '#4F46E5',
       icon: Landmark,
       href: '/dashboard/pension',
     },
@@ -177,7 +177,7 @@ export default function DashboardClient({
       label: lang === 'he' ? 'מקורות הון' : 'Capital',
       value: fmt(capitalSourcesTotal),
       equity: capitalLiquid < capitalSourcesTotal ? fmt(capitalLiquid) : null,
-      color: '#10B981',
+      color: '#059669',
       icon: Vault,
       href: '/dashboard/capital',
     },
@@ -185,7 +185,7 @@ export default function DashboardClient({
       label: lang === 'he' ? 'חוב (הלוואות)' : 'Debt',
       value: `−${fmt(grandTotalDebt)}`,
       equity: null,
-      color: '#EF4444',
+      color: '#DC2626',
       icon: TrendingDown,
       href: '/dashboard/mortgages',
     },
@@ -197,36 +197,36 @@ export default function DashboardClient({
       {/* ── Header ─────────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between">
         <div>
-          <p className="mb-1 text-xs font-semibold tracking-widest text-[#445147]">{today}</p>
-          <h1 className="text-2xl font-semibold text-[#F0EDE8]">
+          <p className="mb-1 text-xs font-semibold tracking-widest text-[#9BB0AC]">{today}</p>
+          <h1 className="text-2xl font-semibold text-[#1C2B2A]">
             {d.greeting}{' '}
-            <span className="text-[#C8AA8F]">{firstName}</span>
+            <span className="text-[#A0806A]">{firstName}</span>
           </h1>
-          <p className="mt-1 text-sm text-[#86968B]">{d.subtitle}</p>
+          <p className="mt-1 text-sm text-[#4A6460]">{d.subtitle}</p>
         </div>
-        <div className="hidden md:flex h-11 w-11 items-center justify-center rounded-xl border border-[#C8AA8F]/20 bg-[#C8AA8F]/8">
-          <Landmark size={20} className="text-[#C8AA8F]" />
+        <div className="hidden md:flex h-11 w-11 items-center justify-center rounded-xl border border-[#C8AA8F]/30 bg-[#C8AA8F]/10">
+          <Landmark size={20} className="text-[#A0806A]" />
         </div>
       </div>
 
       {/* ── Net Worth Hero ──────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden rounded-2xl border border-[#C8AA8F]/15 bg-gradient-to-br from-[#172530] via-[#1A2B29] to-[#101A26] p-6 lg:p-8">
+      <section className="relative overflow-hidden rounded-2xl border border-[#C8AA8F]/25 bg-gradient-to-br from-[#F5EFE6] via-[#EDE5D6] to-[#E5DBCC] p-6 shadow-sm lg:p-8">
         {/* subtle gold shimmer */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#C8AA8F]/40 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#C8AA8F]/50 to-transparent" />
 
         <div className="grid gap-8 lg:grid-cols-[1fr_auto]">
           {/* Left: big NW number */}
           <div>
-            <p className="mb-1 text-xs font-semibold tracking-widest text-[#445147]">{s.netWorth}</p>
+            <p className="mb-1 text-xs font-semibold tracking-widest text-[#9BB0AC]">{s.netWorth}</p>
             <div className="flex items-end gap-3 flex-wrap">
-              <p className="text-4xl font-black tracking-tight text-[#F0EDE8]">
+              <p className="text-4xl font-black tracking-tight text-[#1C2B2A]">
                 {fmt(totalNetWorth)}
               </p>
               {cashFlowTrend !== null && (
                 <span className={`mb-1 rounded-full px-2.5 py-1 text-xs font-semibold ${
                   netCashFlow >= lastMonthNet
-                    ? 'bg-emerald-400/10 text-emerald-400'
-                    : 'bg-red-400/10 text-red-400'
+                    ? 'bg-emerald-100 text-emerald-700'
+                    : 'bg-red-100 text-red-600'
                 }`}>
                   {cashFlowTrend >= 0 ? '↑' : '↓'} {Math.abs(cashFlowTrend).toFixed(1)}%
                 </span>
@@ -235,13 +235,13 @@ export default function DashboardClient({
 
             {/* Equity progress bar */}
             <div className="mt-5">
-              <div className="mb-1.5 flex justify-between text-xs text-[#86968B]">
+              <div className="mb-1.5 flex justify-between text-xs text-[#4A6460]">
                 <span>{lang === 'he' ? 'הון עצמי' : 'Equity'} {equityPct.toFixed(1)}%</span>
                 <span>{lang === 'he' ? 'ממומן' : 'Financed'} {(100 - equityPct).toFixed(1)}%</span>
               </div>
-              <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#2C3B38]">
+              <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#D4DEDD]">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#C8AA8F]/70 to-[#C8AA8F] transition-all duration-700"
+                  className="h-full rounded-full bg-gradient-to-r from-[#C8AA8F]/70 to-[#A0806A] transition-all duration-700"
                   style={{ width: `${equityPct}%` }}
                 />
               </div>
@@ -250,17 +250,17 @@ export default function DashboardClient({
 
           {/* Right: 3 sub-KPIs */}
           <div className="grid grid-cols-3 gap-4 lg:grid-cols-1 lg:gap-3">
-            <div className="rounded-xl bg-[#101A26]/60 px-4 py-3">
-              <p className="text-xs text-[#445147]">{s.totalAssets}</p>
-              <p className="mt-0.5 text-base font-bold text-[#F0EDE8]">{fmt(totalAssets)}</p>
+            <div className="rounded-xl bg-white/70 px-4 py-3 shadow-sm">
+              <p className="text-xs text-[#9BB0AC]">{s.totalAssets}</p>
+              <p className="mt-0.5 text-base font-bold text-[#1C2B2A]">{fmt(totalAssets)}</p>
             </div>
-            <div className="rounded-xl bg-[#101A26]/60 px-4 py-3">
-              <p className="text-xs text-[#445147]">{s.totalDebt}</p>
-              <p className="mt-0.5 text-base font-bold text-red-400">{fmt(grandTotalDebt)}</p>
+            <div className="rounded-xl bg-white/70 px-4 py-3 shadow-sm">
+              <p className="text-xs text-[#9BB0AC]">{s.totalDebt}</p>
+              <p className="mt-0.5 text-base font-bold text-red-600">{fmt(grandTotalDebt)}</p>
             </div>
-            <div className="rounded-xl bg-[#101A26]/60 px-4 py-3">
-              <p className="text-xs text-[#445147]">{s.monthlySurplus}</p>
-              <p className={`mt-0.5 text-base font-bold ${netCashFlow >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+            <div className="rounded-xl bg-white/70 px-4 py-3 shadow-sm">
+              <p className="text-xs text-[#9BB0AC]">{s.monthlySurplus}</p>
+              <p className={`mt-0.5 text-base font-bold ${netCashFlow >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                 {fmtSigned(netCashFlow)}
               </p>
             </div>
@@ -270,29 +270,29 @@ export default function DashboardClient({
 
       {/* ── Financial Freedom Gauge ────────────────────────────────────── */}
       {FIRE_TARGET > 0 && (
-        <section className="rounded-2xl border border-[#2C3B38] bg-[#172530] p-6">
+        <section className="rounded-2xl border border-[#E8E3DC] bg-white p-6 shadow-sm">
           <div className="mb-4 flex items-start justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-[#F0EDE8]">{s.fireTitle}</h2>
-              <p className="mt-0.5 text-xs text-[#86968B]">{s.fireSubtitle}</p>
+              <h2 className="text-sm font-semibold text-[#1C2B2A]">{s.fireTitle}</h2>
+              <p className="mt-0.5 text-xs text-[#4A6460]">{s.fireSubtitle}</p>
             </div>
-            <span className="rounded-full border border-[#C8AA8F]/25 bg-[#C8AA8F]/10 px-3 py-1 text-xs font-bold text-[#C8AA8F]">
+            <span className="rounded-full border border-[#C8AA8F]/30 bg-[#C8AA8F]/10 px-3 py-1 text-xs font-bold text-[#A0806A]">
               {firePct.toFixed(1)}%
             </span>
           </div>
 
           {/* Progress bar */}
           <div className="mb-3">
-            <div className="h-3 w-full overflow-hidden rounded-full bg-[#2C3B38]">
+            <div className="h-3 w-full overflow-hidden rounded-full bg-[#E8E3DC]">
               <div
                 className="h-full rounded-full transition-all duration-700"
                 style={{
                   width: `${firePct}%`,
                   background: firePct >= 100
-                    ? '#10B981'
+                    ? '#059669'
                     : firePct >= 50
-                    ? 'linear-gradient(90deg, #C8AA8F70, #C8AA8F)'
-                    : 'linear-gradient(90deg, #86968B70, #C8AA8F)',
+                    ? 'linear-gradient(90deg, #C8AA8F80, #A0806A)'
+                    : 'linear-gradient(90deg, #9BB0AC80, #A0806A)',
                 }}
               />
             </div>
@@ -300,16 +300,16 @@ export default function DashboardClient({
 
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-xs text-[#445147]">{lang === 'he' ? 'שווי נטו' : 'Net Worth'}</p>
-              <p className="mt-0.5 text-sm font-bold text-[#C8AA8F]">{fmt(totalNetWorth)}</p>
+              <p className="text-xs text-[#9BB0AC]">{lang === 'he' ? 'שווי נטו' : 'Net Worth'}</p>
+              <p className="mt-0.5 text-sm font-bold text-[#A0806A]">{fmt(totalNetWorth)}</p>
             </div>
             <div>
-              <p className="text-xs text-[#445147]">{s.fireTarget}</p>
-              <p className="mt-0.5 text-sm font-bold text-[#F0EDE8]">{fmt(FIRE_TARGET)}</p>
+              <p className="text-xs text-[#9BB0AC]">{s.fireTarget}</p>
+              <p className="mt-0.5 text-sm font-bold text-[#1C2B2A]">{fmt(FIRE_TARGET)}</p>
             </div>
             <div>
-              <p className="text-xs text-[#445147]">{lang === 'he' ? 'לפרישה' : 'To Freedom'}</p>
-              <p className={`mt-0.5 text-sm font-bold ${firePct >= 100 ? 'text-emerald-400' : 'text-amber-400'}`}>
+              <p className="text-xs text-[#9BB0AC]">{lang === 'he' ? 'לפרישה' : 'To Freedom'}</p>
+              <p className={`mt-0.5 text-sm font-bold ${firePct >= 100 ? 'text-emerald-600' : 'text-amber-600'}`}>
                 {firePct >= 100
                   ? s.fireReached
                   : yearsToFIRE != null
@@ -323,7 +323,7 @@ export default function DashboardClient({
 
       {/* ── 4 KPI Cards ────────────────────────────────────────────────── */}
       <section>
-        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#445147]">
+        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#9BB0AC]">
           {d.financialOverview}
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -332,28 +332,28 @@ export default function DashboardClient({
             value={monthlyRentalIncome > 0 ? fmt(monthlyRentalIncome) : '—'}
             subtitle={monthlyRentalIncome > 0 ? s.monthlyRentalSub : assetsSubtitle}
             icon={Building2}
-            accentColor="#86968B"
+            accentColor="#4A6460"
           />
           <StatCard
             title={s.portfolioValue}
             value={portfolioValue > 0 ? fmt(portfolioValue) : '—'}
             subtitle={s.portfolioValueSub}
             icon={LineChart}
-            accentColor="#C8AA8F"
+            accentColor="#A0806A"
           />
           <StatCard
             title={s.capitalSources}
             value={capitalSourcesTotal > 0 ? fmt(capitalSourcesTotal) : '—'}
             subtitle={capitalLiquid > 0 ? (lang === 'he' ? `נזיל: ${fmt(capitalLiquid)}` : `Liquid: ${fmt(capitalLiquid)}`) : s.capitalSourcesSub}
             icon={Vault}
-            accentColor="#10B981"
+            accentColor="#059669"
           />
           <StatCard
             title={s.totalDebt}
             value={grandTotalDebt > 0 ? fmt(grandTotalDebt) : '—'}
             subtitle={totalLoanMonthly > 0 ? (lang === 'he' ? `חודשי: ${fmt(totalLoanMonthly)}` : `Monthly: ${fmt(totalLoanMonthly)}`) : s.totalDebtSub}
             icon={CreditCard}
-            accentColor="#EF4444"
+            accentColor="#DC2626"
           />
         </div>
       </section>
@@ -361,19 +361,19 @@ export default function DashboardClient({
       {/* ── Charts row ──────────────────────────────────────────────────── */}
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Asset allocation — 5 pillars */}
-        <div className="rounded-2xl border border-[#2C3B38] bg-[#20302F] p-6">
+        <div className="rounded-2xl border border-[#E8E3DC] bg-white p-6 shadow-sm">
           <div className="mb-5 flex items-start justify-between">
             <div>
-              <h3 className="text-sm font-semibold text-[#F0EDE8]">{al.title}</h3>
-              <p className="text-xs text-[#86968B]">{al.subtitle}</p>
+              <h3 className="text-sm font-semibold text-[#1C2B2A]">{al.title}</h3>
+              <p className="text-xs text-[#4A6460]">{al.subtitle}</p>
             </div>
-            <div className="hidden md:flex flex-col gap-1 text-xs text-[#445147]">
+            <div className="hidden md:flex flex-col gap-1 text-xs text-[#4A6460]">
               {[
-                { label: al.realEstate, color: '#86968B' },
-                { label: al.stocks,     color: '#C8AA8F' },
-                { label: al.crypto,     color: '#F59E0B' },
-                { label: al.pension,    color: '#6366F1' },
-                { label: al.capital,    color: '#10B981' },
+                { label: al.realEstate, color: '#4A6460' },
+                { label: al.stocks,     color: '#A0806A' },
+                { label: al.crypto,     color: '#D97706' },
+                { label: al.pension,    color: '#4F46E5' },
+                { label: al.capital,    color: '#059669' },
               ].map(({ label, color }) => (
                 <span key={label} className="flex items-center gap-1.5">
                   <span className="h-2 w-2 rounded-full" style={{ background: color }} />
@@ -386,11 +386,11 @@ export default function DashboardClient({
         </div>
 
         {/* 5-Pillar breakdown table */}
-        <div className="rounded-2xl border border-[#2C3B38] bg-[#20302F] p-6">
-          <h3 className="mb-1 text-sm font-semibold text-[#F0EDE8]">
+        <div className="rounded-2xl border border-[#E8E3DC] bg-white p-6 shadow-sm">
+          <h3 className="mb-1 text-sm font-semibold text-[#1C2B2A]">
             {lang === 'he' ? 'פירוט כל עמודות ההון' : 'All Pillars Breakdown'}
           </h3>
-          <p className="mb-5 text-xs text-[#86968B]">
+          <p className="mb-5 text-xs text-[#4A6460]">
             {lang === 'he' ? 'ערך, הון עצמי ולינק לכל לוח' : 'Value, equity & link to each board'}
           </p>
           <div className="space-y-2">
@@ -398,7 +398,7 @@ export default function DashboardClient({
               <Link
                 key={p.href}
                 href={p.href}
-                className="group flex items-center justify-between rounded-xl border border-[#2C3B38] bg-[#172530]/60 px-4 py-3 transition-all hover:border-[#C8AA8F]/20 hover:bg-[#263A37]"
+                className="group flex items-center justify-between rounded-xl border border-[#E8E3DC] bg-[#F7F5F2] px-4 py-3 transition-all hover:border-[#C8AA8F]/30 hover:bg-[#F4F0EA]"
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -408,9 +408,9 @@ export default function DashboardClient({
                     <p.icon size={14} style={{ color: p.color }} />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#F0EDE8]">{p.label}</p>
+                    <p className="text-sm font-medium text-[#1C2B2A]">{p.label}</p>
                     {p.equity && (
-                      <p className="text-xs text-[#445147]">
+                      <p className="text-xs text-[#9BB0AC]">
                         {lang === 'he' ? 'הון עצמי:' : 'Equity:'} {p.equity}
                       </p>
                     )}
@@ -422,18 +422,18 @@ export default function DashboardClient({
                   </span>
                   <ChevronRight
                     size={12}
-                    className="text-[#445147] transition-colors group-hover:text-[#C8AA8F]"
+                    className="text-[#9BB0AC] transition-colors group-hover:text-[#A0806A]"
                   />
                 </div>
               </Link>
             ))}
           </div>
           {/* Net Worth total row */}
-          <div className="mt-3 flex items-center justify-between rounded-xl border border-[#C8AA8F]/15 bg-[#C8AA8F]/5 px-4 py-3">
-            <span className="text-sm font-semibold text-[#C8AA8F]">
+          <div className="mt-3 flex items-center justify-between rounded-xl border border-[#C8AA8F]/25 bg-[#C8AA8F]/8 px-4 py-3">
+            <span className="text-sm font-semibold text-[#A0806A]">
               {lang === 'he' ? '= שווי נטו' : '= Net Worth'}
             </span>
-            <span className="text-base font-black text-[#C8AA8F]">{fmt(totalNetWorth)}</span>
+            <span className="text-base font-black text-[#A0806A]">{fmt(totalNetWorth)}</span>
           </div>
         </div>
       </section>
@@ -441,113 +441,113 @@ export default function DashboardClient({
       {/* ── Cash Flow + Mortgage Snapshot ──────────────────────────────── */}
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {/* Net cash flow */}
-        <div className="relative overflow-hidden rounded-2xl border border-[#2C3B38] bg-[#20302F] p-5">
+        <div className="relative overflow-hidden rounded-2xl border border-[#E8E3DC] bg-white p-5 shadow-sm">
           <div className="absolute inset-x-0 top-0 h-[2px]"
-               style={{ background: 'linear-gradient(90deg, transparent, #86968B, transparent)' }} />
+               style={{ background: 'linear-gradient(90deg, transparent, #4A6460, transparent)' }} />
           <div className="mb-3 flex items-center justify-between">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#86968B]/10">
-              <Wallet size={17} className="text-[#86968B]" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#4A6460]/10">
+              <Wallet size={17} className="text-[#4A6460]" />
             </div>
             {cashFlowTrend !== null && (
               <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                cashFlowTrend >= 0 ? 'bg-emerald-400/10 text-emerald-400' : 'bg-red-400/10 text-red-400'
+                cashFlowTrend >= 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-600'
               }`}>
                 {cashFlowTrend >= 0 ? '↑' : '↓'} {Math.abs(cashFlowTrend).toFixed(1)}%
               </span>
             )}
           </div>
-          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#86968B]">{s.cashFlow}</p>
-          <p className={`text-2xl font-bold ${netCashFlow >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#4A6460]">{s.cashFlow}</p>
+          <p className={`text-2xl font-bold ${netCashFlow >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             {hasCashFlowData ? fmtSigned(netCashFlow) : '—'}
           </p>
-          <p className="mt-1 text-xs text-[#445147]">{hasCashFlowData ? s.cashFlowSub : s.cashFlowEmpty}</p>
+          <p className="mt-1 text-xs text-[#9BB0AC]">{hasCashFlowData ? s.cashFlowSub : s.cashFlowEmpty}</p>
           {hasCashFlowData && (
-            <div className="mt-4 space-y-2 border-t border-[#2C3B38] pt-4">
+            <div className="mt-4 space-y-2 border-t border-[#E8E3DC] pt-4">
               <div className="flex justify-between text-xs">
-                <span className="text-[#86968B]">{lang === 'he' ? 'הכנסות' : 'Income'}</span>
-                <span className="font-semibold text-emerald-400">
+                <span className="text-[#4A6460]">{lang === 'he' ? 'הכנסות' : 'Income'}</span>
+                <span className="font-semibold text-emerald-600">
                   {totalMonthlyIncome > 0 ? `+${fmt(totalMonthlyIncome)}` : '—'}
                 </span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#86968B]">{lang === 'he' ? 'הוצאות' : 'Expenses'}</span>
-                <span className="font-semibold text-red-400">
+                <span className="text-[#4A6460]">{lang === 'he' ? 'הוצאות' : 'Expenses'}</span>
+                <span className="font-semibold text-red-600">
                   {totalMonthlyExpenses > 0 ? `-${fmt(totalMonthlyExpenses)}` : '—'}
                 </span>
               </div>
-              <div className="flex justify-between border-t border-[#2C3B38] pt-2 text-xs">
-                <span className="font-semibold text-[#F0EDE8]">{lang === 'he' ? 'נטו' : 'Net'}</span>
-                <span className={`font-bold ${netCashFlow >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+              <div className="flex justify-between border-t border-[#E8E3DC] pt-2 text-xs">
+                <span className="font-semibold text-[#1C2B2A]">{lang === 'he' ? 'נטו' : 'Net'}</span>
+                <span className={`font-bold ${netCashFlow >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                   {fmtSigned(netCashFlow)}
                 </span>
               </div>
             </div>
           )}
-          <Link href="/dashboard/cashflow" className="mt-4 flex items-center gap-1 text-xs text-[#445147] hover:text-[#C8AA8F] transition-colors">
+          <Link href="/dashboard/cashflow" className="mt-4 flex items-center gap-1 text-xs text-[#9BB0AC] hover:text-[#A0806A] transition-colors">
             {lang === 'he' ? 'לוח תזרים' : 'Cash Flow Board'} <ArrowRight size={11} />
           </Link>
         </div>
 
         {/* Capital snapshot */}
-        <div className="relative overflow-hidden rounded-2xl border border-[#2C3B38] bg-[#20302F] p-5">
+        <div className="relative overflow-hidden rounded-2xl border border-[#E8E3DC] bg-white p-5 shadow-sm">
           <div className="absolute inset-x-0 top-0 h-[2px]"
-               style={{ background: 'linear-gradient(90deg, transparent, #10B98144, transparent)' }} />
-          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10">
-            <Vault size={17} className="text-emerald-400" />
+               style={{ background: 'linear-gradient(90deg, transparent, #05966944, transparent)' }} />
+          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50">
+            <Vault size={17} className="text-emerald-600" />
           </div>
-          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#86968B]">{s.capitalSources}</p>
-          <p className="text-2xl font-bold text-emerald-400">
+          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#4A6460]">{s.capitalSources}</p>
+          <p className="text-2xl font-bold text-emerald-600">
             {capitalSourcesTotal > 0 ? fmt(capitalSourcesTotal) : '—'}
           </p>
-          <p className="mt-1 text-xs text-[#445147]">{s.capitalSourcesSub}</p>
+          <p className="mt-1 text-xs text-[#9BB0AC]">{s.capitalSourcesSub}</p>
           {capitalSourcesTotal > 0 && (
-            <div className="mt-4 space-y-2 border-t border-[#2C3B38] pt-4">
+            <div className="mt-4 space-y-2 border-t border-[#E8E3DC] pt-4">
               <div className="flex justify-between text-xs">
-                <span className="text-[#86968B]">{lang === 'he' ? 'נזיל עכשיו' : 'Liquid now'}</span>
-                <span className="font-semibold text-emerald-400">{fmt(capitalLiquid)}</span>
+                <span className="text-[#4A6460]">{lang === 'he' ? 'נזיל עכשיו' : 'Liquid now'}</span>
+                <span className="font-semibold text-emerald-600">{fmt(capitalLiquid)}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#86968B]">{lang === 'he' ? 'נעול / עתידי' : 'Locked / future'}</span>
-                <span className="font-semibold text-amber-400">{fmt(capitalSourcesTotal - capitalLiquid)}</span>
+                <span className="text-[#4A6460]">{lang === 'he' ? 'נעול / עתידי' : 'Locked / future'}</span>
+                <span className="font-semibold text-amber-600">{fmt(capitalSourcesTotal - capitalLiquid)}</span>
               </div>
             </div>
           )}
-          <Link href="/dashboard/capital" className="mt-4 flex items-center gap-1 text-xs text-[#445147] hover:text-[#C8AA8F] transition-colors">
+          <Link href="/dashboard/capital" className="mt-4 flex items-center gap-1 text-xs text-[#9BB0AC] hover:text-[#A0806A] transition-colors">
             {lang === 'he' ? 'לוח מקורות הון' : 'Capital Board'} <ArrowRight size={11} />
           </Link>
         </div>
 
         {/* Mortgage snapshot */}
-        <div className="relative overflow-hidden rounded-2xl border border-red-900/30 bg-[#20302F] p-5">
+        <div className="relative overflow-hidden rounded-2xl border border-red-200 bg-white p-5 shadow-sm">
           <div className="absolute inset-x-0 top-0 h-[2px]"
-               style={{ background: 'linear-gradient(90deg, transparent, #EF444444, transparent)' }} />
-          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-red-500/10">
-            <Banknote size={17} className="text-red-400" />
+               style={{ background: 'linear-gradient(90deg, transparent, #DC262644, transparent)' }} />
+          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-red-50">
+            <Banknote size={17} className="text-red-600" />
           </div>
-          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#86968B]">
+          <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#4A6460]">
             {lang === 'he' ? 'משכנתאות וחוב' : 'Mortgages & Debt'}
           </p>
-          <p className="text-2xl font-bold text-red-400">
+          <p className="text-2xl font-bold text-red-600">
             {totalLoanDebt > 0 ? fmt(totalLoanDebt) : grandTotalDebt > 0 ? fmt(grandTotalDebt) : '—'}
           </p>
-          <p className="mt-1 text-xs text-[#445147]">{s.totalDebtSub}</p>
+          <p className="mt-1 text-xs text-[#9BB0AC]">{s.totalDebtSub}</p>
           {(totalLoanMonthly > 0 || monthlyDebtService > 0) && (
-            <div className="mt-4 space-y-2 border-t border-[#2C3B38] pt-4">
+            <div className="mt-4 space-y-2 border-t border-[#E8E3DC] pt-4">
               <div className="flex justify-between text-xs">
-                <span className="text-[#86968B]">{lang === 'he' ? 'תשלום חודשי' : 'Monthly payment'}</span>
-                <span className="font-semibold text-red-400">
+                <span className="text-[#4A6460]">{lang === 'he' ? 'תשלום חודשי' : 'Monthly payment'}</span>
+                <span className="font-semibold text-red-600">
                   {fmt(totalLoanMonthly || monthlyDebtService)}
                 </span>
               </div>
               {loanCount > 0 && (
                 <div className="flex justify-between text-xs">
-                  <span className="text-[#86968B]">{lang === 'he' ? 'מספר הלוואות' : 'Active loans'}</span>
-                  <span className="font-semibold text-[#F0EDE8]">{loanCount}</span>
+                  <span className="text-[#4A6460]">{lang === 'he' ? 'מספר הלוואות' : 'Active loans'}</span>
+                  <span className="font-semibold text-[#1C2B2A]">{loanCount}</span>
                 </div>
               )}
             </div>
           )}
-          <Link href="/dashboard/mortgages" className="mt-4 flex items-center gap-1 text-xs text-[#445147] hover:text-[#C8AA8F] transition-colors">
+          <Link href="/dashboard/mortgages" className="mt-4 flex items-center gap-1 text-xs text-[#9BB0AC] hover:text-[#A0806A] transition-colors">
             {lang === 'he' ? 'לוח משכנתאות' : 'Mortgage Board'} <ArrowRight size={11} />
           </Link>
         </div>
@@ -556,45 +556,45 @@ export default function DashboardClient({
       {/* ── Asset class mini-tiles ───────────────────────────────────────── */}
       <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[
-          { label: lang === 'he' ? 'נדל"ן'       : 'Real Estate',   value: fmt(propAssets),          color: '#86968B', icon: Building2  },
-          { label: lang === 'he' ? 'מניות ו-ETF' : 'Stocks & ETFs', value: fmt(stockValue),          color: '#C8AA8F', icon: BarChart3  },
-          { label: lang === 'he' ? 'קריפטו'      : 'Crypto',        value: fmt(cryptoValue),         color: '#F59E0B', icon: Coins      },
-          { label: lang === 'he' ? 'פנסיה וגמל'  : 'Pension',       value: fmt(pensionAssets),       color: '#6366F1', icon: Landmark   },
+          { label: lang === 'he' ? 'נדל"ן'       : 'Real Estate',   value: fmt(propAssets),          color: '#4A6460', icon: Building2  },
+          { label: lang === 'he' ? 'מניות ו-ETF' : 'Stocks & ETFs', value: fmt(stockValue),          color: '#A0806A', icon: BarChart3  },
+          { label: lang === 'he' ? 'קריפטו'      : 'Crypto',        value: fmt(cryptoValue),         color: '#D97706', icon: Coins      },
+          { label: lang === 'he' ? 'פנסיה וגמל'  : 'Pension',       value: fmt(pensionAssets),       color: '#4F46E5', icon: Landmark   },
         ].map(({ label, value, color, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-[#2C3B38] bg-[#20302F] p-4">
+          <div key={label} className="rounded-xl border border-[#E8E3DC] bg-white p-4 shadow-sm">
             <div className="mb-3 flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ background: `${color}18` }}>
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ background: `${color}15` }}>
                 <Icon size={14} style={{ color }} />
               </div>
-              <span className="text-xs text-[#86968B]">{label}</span>
+              <span className="text-xs text-[#4A6460]">{label}</span>
             </div>
-            <p className="text-base font-bold text-[#F0EDE8]">{value}</p>
+            <p className="text-base font-bold text-[#1C2B2A]">{value}</p>
           </div>
         ))}
       </section>
 
       {/* ── Asset allocation chart (full) ───────────────────────────────── */}
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-[#2C3B38] bg-[#20302F] p-6">
+        <div className="rounded-2xl border border-[#E8E3DC] bg-white p-6 shadow-sm">
           <div className="mb-5">
-            <h3 className="text-sm font-semibold text-[#F0EDE8]">{al.title}</h3>
-            <p className="text-xs text-[#86968B]">{al.subtitle}</p>
+            <h3 className="text-sm font-semibold text-[#1C2B2A]">{al.title}</h3>
+            <p className="text-xs text-[#4A6460]">{al.subtitle}</p>
           </div>
           <AllocationChart data={assetData} total={assetTotal} emptyLabel={al.emptyLabel} />
         </div>
 
         {/* Liabilities distribution */}
-        <div className="rounded-2xl border border-red-900/30 bg-[#20302F] p-6">
+        <div className="rounded-2xl border border-red-200 bg-white p-6 shadow-sm">
           <div className="mb-5">
-            <h3 className="text-sm font-semibold text-[#F0EDE8]">{d.liabilities.distributionTitle}</h3>
-            <p className="text-xs text-[#86968B]">{d.liabilities.distributionSubtitle}</p>
+            <h3 className="text-sm font-semibold text-[#1C2B2A]">{d.liabilities.distributionTitle}</h3>
+            <p className="text-xs text-[#4A6460]">{d.liabilities.distributionSubtitle}</p>
           </div>
           <AllocationChart
             data={liabData}
             total={totalLiabilities}
             emptyLabel={d.liabilities.emptyChart}
             totalLabel={d.liabilities.totalLabel}
-            accentColor="#EF4444"
+            accentColor="#DC2626"
           />
         </div>
       </section>
@@ -604,13 +604,13 @@ export default function DashboardClient({
 
       {/* ── Next Meeting ─────────────────────────────────────────────────── */}
       <section>
-        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#445147]">
+        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#9BB0AC]">
           {t.meetings.nextMeeting}
         </h2>
-        <div className="relative overflow-hidden rounded-2xl border border-[#2C3B38] bg-[#20302F] p-5">
+        <div className="relative overflow-hidden rounded-2xl border border-[#E8E3DC] bg-white p-5 shadow-sm">
           {nextMeeting ? (() => {
             const diff  = daysUntil(nextMeeting.date_time)
-            const color = TYPE_COLORS[nextMeeting.meeting_type] ?? '#86968B'
+            const color = TYPE_COLORS[nextMeeting.meeting_type] ?? '#4A6460'
             return (
               <>
                 <div className="absolute inset-y-0 start-0 w-[3px] rounded-full" style={{ background: color }} />
@@ -618,14 +618,14 @@ export default function DashboardClient({
                   <div className="min-w-0 flex-1">
                     <span
                       className="inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold"
-                      style={{ background: `${color}20`, color }}
+                      style={{ background: `${color}15`, color }}
                     >
                       {t.meetings.types[nextMeeting.meeting_type] as string}
                     </span>
-                    <p className="mt-2 truncate text-base font-semibold text-[#F0EDE8]">
+                    <p className="mt-2 truncate text-base font-semibold text-[#1C2B2A]">
                       {nextMeeting.title}
                     </p>
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#86968B]">
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#4A6460]">
                       <span className="flex items-center gap-1">
                         <Clock size={11} />
                         {new Date(nextMeeting.date_time).toLocaleDateString(
@@ -652,7 +652,7 @@ export default function DashboardClient({
                     </span>
                     <Link
                       href="/dashboard/meetings"
-                      className="flex items-center gap-1 text-xs text-[#445147] transition hover:text-[#C8AA8F]"
+                      className="flex items-center gap-1 text-xs text-[#9BB0AC] transition hover:text-[#A0806A]"
                     >
                       {t.meetings.viewAll} <ArrowUpRight size={12} />
                     </Link>
@@ -663,14 +663,14 @@ export default function DashboardClient({
           })() : (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#2C3B38]">
-                  <CalendarDays size={17} className="text-[#445147]" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#EEF1F0]">
+                  <CalendarDays size={17} className="text-[#4A6460]" />
                 </div>
-                <p className="text-sm text-[#445147]">{t.meetings.noNextMeeting}</p>
+                <p className="text-sm text-[#4A6460]">{t.meetings.noNextMeeting}</p>
               </div>
               <Link
                 href="/dashboard/meetings"
-                className="flex items-center gap-1 text-xs text-[#445147] transition hover:text-[#C8AA8F]"
+                className="flex items-center gap-1 text-xs text-[#9BB0AC] transition hover:text-[#A0806A]"
               >
                 {t.meetings.viewAll} <ArrowUpRight size={12} />
               </Link>
@@ -684,17 +684,17 @@ export default function DashboardClient({
 
       {/* ── Boards Grid ─────────────────────────────────────────────────── */}
       <section>
-        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#445147]">
+        <h2 className="mb-4 text-xs font-semibold tracking-widest text-[#9BB0AC]">
           {d.yourBoards}
         </h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {d.boards.map(({ label, desc }, i) => {
-            const { icon: Icon, href, color } = BOARD_CONFIG[i] ?? { icon: Briefcase, href: '#', color: '#86968B' }
+            const { icon: Icon, href, color } = BOARD_CONFIG[i] ?? { icon: Briefcase, href: '#', color: '#4A6460' }
             return (
               <Link
                 key={href}
                 href={href}
-                className="group flex items-start justify-between gap-3 rounded-xl border border-[#2C3B38] bg-[#20302F] p-4 transition-all duration-200 hover:border-[#C8AA8F]/30 hover:bg-[#263A37]"
+                className="group flex items-start justify-between gap-3 rounded-xl border border-[#E8E3DC] bg-white p-4 shadow-sm transition-all duration-200 hover:border-[#C8AA8F]/30 hover:bg-[#F7F5F2]"
               >
                 <div className="flex items-start gap-3">
                   <div
@@ -704,13 +704,13 @@ export default function DashboardClient({
                     <Icon size={15} style={{ color }} />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#F0EDE8] leading-snug">{label}</p>
-                    <p className="mt-0.5 text-xs text-[#86968B] leading-snug">{desc}</p>
+                    <p className="text-sm font-medium text-[#1C2B2A] leading-snug">{label}</p>
+                    <p className="mt-0.5 text-xs text-[#4A6460] leading-snug">{desc}</p>
                   </div>
                 </div>
                 <ArrowUpRight
                   size={15}
-                  className="mt-0.5 shrink-0 text-[#445147] transition-colors group-hover:text-[#C8AA8F]"
+                  className="mt-0.5 shrink-0 text-[#9BB0AC] transition-colors group-hover:text-[#A0806A]"
                 />
               </Link>
             )
