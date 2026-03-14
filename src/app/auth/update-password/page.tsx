@@ -22,13 +22,34 @@ export default function UpdatePasswordPage() {
     e.preventDefault()
     if (password !== confirm) { setError('הסיסמאות אינן תואמות.'); return }
     if (password.length < 6)  { setError('הסיסמה חייבת להכיל לפחות 6 תווים.'); return }
+
+    // Guard: ensure env vars are present before attempting the fetch
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (!supabaseUrl || !supabaseKey) {
+      setError('שגיאת הגדרות: משתני סביבה חסרים (SUPABASE_URL / SUPABASE_ANON_KEY).')
+      return
+    }
+
     setLoading(true); setError(null)
-    const supabase = createClient()
-    const { error: err } = await supabase.auth.updateUser({ password })
-    setLoading(false)
-    if (err) { setError(err.message); return }
-    setDone(true)
-    setTimeout(() => router.push('/login'), 3000)
+
+    try {
+      const supabase = createClient()         // anon-key browser client — no service role
+      const { error: err } = await supabase.auth.updateUser({ password })
+      if (err) {
+        console.error('[update-password] updateUser error:', err)
+        setError(err.message)
+        return
+      }
+      setDone(true)
+      setTimeout(() => router.push('/login'), 3000)
+    } catch (caught: unknown) {
+      const msg = caught instanceof Error ? caught.message : String(caught)
+      console.error('[update-password] caught:', caught)
+      setError(`שגיאת רשת: ${msg}`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
