@@ -34,6 +34,7 @@ export default function UpdatePasswordPage() {
     setLoading(true); setError(null)
 
     try {
+      console.log('[update-password] Supabase URL being used:', process.env.NEXT_PUBLIC_SUPABASE_URL)
       const supabase = createClient()         // anon-key browser client — no service role
       const { error: err } = await supabase.auth.updateUser({ password })
       if (err) {

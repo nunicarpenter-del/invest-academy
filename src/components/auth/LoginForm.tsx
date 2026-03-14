@@ -201,13 +201,25 @@ export default function LoginForm() {
   const handleForgot = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true); setError(null)
-    const supabase = createClient()
-    const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/update-password`,
-    })
-    setLoading(false)
-    if (err) { setError(err.message); return }
-    setSuccess('בדוק את תיבת המייל שלך לקבלת קישור לשחזור הסיסמה.')
+    console.log('[forgot] Supabase URL being used:', process.env.NEXT_PUBLIC_SUPABASE_URL)
+    try {
+      const supabase = createClient()
+      const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/update-password`,
+      })
+      if (err) {
+        console.error('[forgot] resetPasswordForEmail error:', err)
+        setError(err.message)
+        return
+      }
+      setSuccess('בדוק את תיבת המייל שלך לקבלת קישור לשחזור הסיסמה.')
+    } catch (caught: unknown) {
+      const msg = caught instanceof Error ? caught.message : String(caught)
+      console.error('[forgot] caught:', caught)
+      setError(`שגיאת רשת: ${msg}`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   // ─────────────────────────────────────────────────────────────────────────
